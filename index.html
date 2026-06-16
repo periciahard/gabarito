@@ -16,7 +16,18 @@
 if(!window.XLSX){document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"><\/script>')}
 </script>
 </head>
-<body>
+<body> <div style="
+position:fixed;
+top:10px;
+right:10px;
+z-index:99999;
+background:red;
+color:white;
+padding:8px 12px;
+font-weight:bold;
+border-radius:8px">
+V11
+</div>
 <header><h1>Leitor de Cartão-Resposta V10</h1><small>OpenCV.js • círculos automáticos • XLSX real • lote • banco de alunos • descritores • testes • confiança</small></header>
 <main>
 <section class="card"><div class="row"><span id="cvStatus" class="badge warn">Carregando OpenCV...</span><span id="sheetStatus" class="badge blue">XLSX aguardando</span><span class="badge">52 questões: 1–26 Português | 27–52 Matemática</span></div><p class="hint">A V8.1 usa OpenCV.js quando disponível. Se o CDN falhar, há fallback interno para leitura básica, mas a recomendação é publicar no GitHub Pages com internet no primeiro carregamento.</p></section>
