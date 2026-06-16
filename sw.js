@@ -1,5 +1,5 @@
-// V13 LIMPA: sem cache persistente e removendo versões antigas.
-const CACHE = 'leitor-omr-v13-limpa-20260616';
+// V14 LIMPA: sem cache persistente e removendo versões antigas.
+const CACHE = 'leitor-omr-v14-limpa-20260616';
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));

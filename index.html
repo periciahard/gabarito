@@ -8,7 +8,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Leitor de Cartão-Resposta V13 LIMPA</title>
+<title>Leitor de Cartão-Resposta V14 LIMPA</title>
 <style>
 :root{--bg:#f3f4f6;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d1d5db;--ok:#16a34a;--warn:#ca8a04;--bad:#dc2626;--blue:#2563eb;--soft:#eef2ff}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif} header{position:sticky;top:0;z-index:9;background:#111827;color:#fff;padding:12px 14px;box-shadow:0 2px 10px #0005} header h1{margin:0;font-size:18px} header small{color:#d1d5db} main{padding:12px;max-width:1180px;margin:auto}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;box-shadow:0 2px 10px #0001}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.grid{display:grid;gap:10px}.cols2{grid-template-columns:repeat(2,minmax(0,1fr))}.cols3{grid-template-columns:repeat(3,minmax(0,1fr))}button,label.filebtn{border:0;border-radius:10px;background:#111827;color:#fff;padding:12px 14px;font-weight:700;cursor:pointer;display:inline-block}button.secondary{background:#e5e7eb;color:#111827}button.ok{background:var(--ok)}button.warn{background:var(--warn)}button.bad{background:var(--bad)}button.blue{background:var(--blue)}button:disabled{opacity:.45;cursor:not-allowed}input,textarea,select{border:1px solid var(--line);border-radius:10px;padding:11px;font-size:16px;width:100%;background:#fff}input[type=file]{display:none}.hint{font-size:13px;color:var(--muted);line-height:1.35}.badge{display:inline-block;border-radius:999px;padding:5px 9px;background:#e5e7eb;font-size:12px;font-weight:700}.badge.ok{background:#dcfce7;color:#166534}.badge.warn{background:#fef3c7;color:#854d0e}.badge.bad{background:#fee2e2;color:#991b1b}.badge.blue{background:#dbeafe;color:#1e40af}.canvasWrap{position:relative;width:100%;overflow:auto;background:#e5e7eb;border-radius:12px;border:1px solid var(--line)}canvas{max-width:100%;height:auto;display:block;margin:auto;background:#fff}#cameraBox{position:relative;display:none;background:#000;border-radius:14px;overflow:hidden}video{width:100%;display:block}.overlay{position:absolute;inset:0;pointer-events:none}.target{position:absolute;width:54px;height:54px;border:4px solid #ef4444;border-radius:8px}.target.ok{border-color:#22c55e}.tl{left:6%;top:16%}.tr{right:6%;top:16%}.bl{left:6%;bottom:12%}.br{right:6%;bottom:12%}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid var(--line);padding:6px;text-align:center}th{background:#f9fafb}.res-ok{color:var(--ok);font-weight:700}.res-warn{color:var(--warn);font-weight:700}.res-bad{color:var(--bad);font-weight:700}details summary{cursor:pointer;font-weight:700}.bar{height:18px;background:#e5e7eb;border-radius:999px;overflow:hidden;min-width:180px}.bar>div{height:100%;background:var(--ok);width:0%;transition:.2s}.bar.warn>div{background:var(--warn)}.bar.bad>div{background:var(--bad)}.pill{background:#f9fafb;border:1px solid var(--line);border-radius:12px;padding:10px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.tabs button{padding:9px 11px}.hidden{display:none!important}@media(max-width:760px){.cols2,.cols3{grid-template-columns:1fr}header h1{font-size:16px}button,label.filebtn{width:100%;text-align:center}.row>*{flex:1 1 100%}}
@@ -20,9 +20,9 @@ if(!window.XLSX){document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@
 </script>
 </head>
 <body>
-<div id="versionBadge" style="position:fixed;top:8px;right:8px;z-index:999999;background:#dc2626;color:white;padding:8px 12px;border-radius:10px;font-weight:800;font-family:Arial;box-shadow:0 2px 8px #0005">V13 LIMPA - BUILD 2026-06-16</div>
+<div id="versionBadge" style="position:fixed;top:8px;right:8px;z-index:999999;background:#dc2626;color:white;padding:8px 12px;border-radius:10px;font-weight:800;font-family:Arial;box-shadow:0 2px 8px #0005">V14 LIMPA - BUILD 2026-06-16</div>
 
-<header><h1>Leitor de Cartão-Resposta V13 LIMPA</h1><small>Build 2026-06-16 • leitura bloqueada sem 4 marcadores • cartão V10/V13</small></header>
+<header><h1>Leitor de Cartão-Resposta V14 LIMPA</h1><small>Build 2026-06-16 • leitura bloqueada sem 4 marcadores • cartão V10/V14</small></header>
 <main>
 <section class="card"><div class="row"><span id="cvStatus" class="badge warn">Carregando OpenCV...</span><span id="sheetStatus" class="badge blue">XLSX aguardando</span><span class="badge">52 questões: 1–26 Português | 27–52 Matemática</span></div><p class="hint">V12 limpa: versão sem cache antigo, com identificação visível e captura automática.</p></section>
 <section class="card">
@@ -56,7 +56,7 @@ if(!window.XLSX){document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@
   </div>
   <p class="hint">Escolha o curso, depois a turma, e o sistema mostra apenas os alunos daquela turma. O banco inicial já contém as listas enviadas de Administração e Redes de Computadores.</p>
 </section>
-<section class="card"><div class="row"><button class="blue" id="openCamera">Abrir câmera</button><button class="ok" id="captureBtn" disabled>Fotografar</button><button class="secondary" id="closeCamera" disabled>Fechar câmera</button><label class="filebtn" for="fileInput">Enviar imagem(ns)</label><input id="fileInput" type="file" accept="image/*" multiple></div><div class="row" style="margin-top:10px"><span id="autoScanStatus" class="badge warn">Captura automática: aguardando câmera</span><span id="markerStatus" class="badge">Marcadores: --</span><span id="markerDiag" class="badge">Candidatos: --</span></div><div id="cameraBox" style="margin-top:12px"><video id="video" autoplay playsinline></video><div class="overlay"><div class="target tl"></div><div class="target tr"></div><div class="target bl"></div><div class="target br"></div></div></div></section>
+<section class="card"><div class="row"><button class="blue" id="openCamera">Abrir câmera</button><button class="ok" id="captureBtn" disabled>Fotografar</button><button class="secondary" id="closeCamera" disabled>Fechar câmera</button><label class="filebtn" for="fileInput">Enviar imagem(ns)</label><input id="fileInput" type="file" accept="image/*" multiple></div><div class="row" style="margin-top:10px"><span id="cameraStatus" class="badge">Câmera: fechada</span><span id="autoScanStatus" class="badge warn">Captura automática: aguardando câmera</span><span id="markerStatus" class="badge">Marcadores: --</span><span id="markerDiag" class="badge">Candidatos: --</span></div><div id="cameraBox" style="margin-top:12px"><video id="video" autoplay playsinline></video><div class="overlay"><div class="target tl"></div><div class="target tr"></div><div class="target bl"></div><div class="target br"></div></div></div></section>
 <section class="card"><details open><summary>Gabarito, descritores e áreas</summary><div class="grid cols2" style="margin-top:10px"><div><label>Gabarito oficial (52 letras)</label><textarea id="answerKey" rows="4" placeholder="A B C D E ..."></textarea></div><div><label>Descritores (52 itens)</label><textarea id="descriptors" rows="4" placeholder="D1 D2 D3 ..."></textarea></div></div><p class="hint">Os descritores podem ser separados por espaço, vírgula, ponto e vírgula ou quebra de linha. O relatório agrupa acertos por descritor.</p></details></section>
 <section class="card"><div class="row"><button id="processBtn" disabled>Ler cartão atual</button><button class="warn" id="processBatchBtn" disabled>Ler lote</button><button class="secondary" id="toggleDebug">Mostrar/ocultar debug</button><button class="secondary" id="runTests">Teste automático</button></div><div class="row" style="margin-top:10px"><span id="qualityBadge" class="badge">Aguardando imagem</span><span id="hardGateBadge" class="badge warn">Leitura bloqueada até encontrar 4 marcadores reais</span><div class="bar" id="confBar"><div></div></div><span id="confText" class="badge">Confiança: --</span></div><div class="canvasWrap" style="margin-top:10px"><canvas id="preview"></canvas></div><div id="debugBox" class="hidden"><div class="grid cols2"><div class="canvasWrap" style="margin-top:10px"><canvas id="warped"></canvas></div><div class="canvasWrap" style="margin-top:10px"><canvas id="debug"></canvas></div></div></div></section>
 <section class="card"><h2 style="margin-top:0">Resultado da leitura</h2><div class="row"><span id="summary" class="badge">Nenhuma leitura realizada</span><button class="ok" id="saveStudent" disabled>Salvar leitura</button><button class="blue" id="exportXlsx" disabled>Exportar XLSX</button><button class="blue" id="exportCsv" disabled>Exportar CSV</button><button class="secondary" id="clearReadings">Limpar leituras</button></div><div style="overflow:auto;margin-top:10px"><table id="resultTable"></table></div></section>
@@ -78,7 +78,7 @@ if(!window.XLSX){document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@
 <section class="card"><h2 style="margin-top:0">Testes automáticos</h2><div id="testOutput" class="hint">Clique em “Teste automático” para validar dupla marcação, branco, leitura cheia e exportação.</div></section>
 </main>
 <script>
-// V13 LIMPA: remove service workers e caches antigos para acabar com V13/V13/V13 presas no navegador.
+// V14 LIMPA: remove service workers e caches antigos para acabar com V14/V14/V14 presas no navegador.
 (async function v12CleanBoot(){
   try{
     if('serviceWorker' in navigator){
@@ -89,15 +89,15 @@ if(!window.XLSX){document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@
       const keys = await caches.keys();
       await Promise.all(keys.map(k => caches.delete(k)));
     }
-    console.log('V13 LIMPA carregada - caches antigos removidos');
-  }catch(e){ console.warn('V13 cleanup falhou:', e); }
+    console.log('V14 LIMPA carregada - caches antigos removidos');
+  }catch(e){ console.warn('V14 cleanup falhou:', e); }
 })();
 
 
 const $=id=>document.getElementById(id); const preview=$('preview'),pctx=preview.getContext('2d',{willReadFrequently:true}); const warped=$('warped'),wctx=warped.getContext('2d',{willReadFrequently:true}); const debug=$('debug'),dctx=debug.getContext('2d',{willReadFrequently:true}); const video=$('video');
-let cvReady=false, sourceImages=[], currentImage=null, currentIndex=0, stream=null, lastResults=[], saved=JSON.parse(localStorage.getItem('omrV13_saved')||'[]'), bank=JSON.parse(localStorage.getItem('omrV13_bank')||'[]');
+let cvReady=false, sourceImages=[], currentImage=null, currentIndex=0, stream=null, lastResults=[], saved=JSON.parse(localStorage.getItem('omrV14_saved')||'[]'), bank=JSON.parse(localStorage.getItem('omrV14_bank')||'[]');
 const W=1600,H=620, Q=52, ALTS='ABCDE'.split('');
-let calibration = JSON.parse(localStorage.getItem('omrV13_calibration')||'null');
+let calibration = JSON.parse(localStorage.getItem('omrV14_calibration')||'null');
 let lastWarpedData = null;
 let lastMarkers = null;
 let lastCircles = [];
@@ -117,17 +117,74 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&
 
 function normalizeText(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim()}
 function ensureDefaultStudents(){
-  const flag=localStorage.getItem('omrV13_defaults_loaded');
+  const flag=localStorage.getItem('omrV14_defaults_loaded');
   if(!bank || !bank.length || flag!=='1'){
     const merged=[...(bank||[])];
     DEFAULT_STUDENTS.forEach(s=>{
       if(!merged.some(x=>normalizeText(x.nome)===normalizeText(s.nome)&&normalizeText(x.turma)===normalizeText(s.turma)&&normalizeText(x.curso)===normalizeText(s.curso))) merged.push(s);
     });
-    bank=merged; localStorage.setItem('omrV13_bank',JSON.stringify(bank)); localStorage.setItem('omrV13_defaults_loaded','1');
+    bank=merged; localStorage.setItem('omrV14_bank',JSON.stringify(bank)); localStorage.setItem('omrV14_defaults_loaded','1');
   }
 }
 ensureDefaultStudents();
 function setBadge(t,c=''){const b=$('qualityBadge');b.textContent=t;b.className='badge '+c} function setConfidence(v){v=Math.max(0,Math.min(100,Math.round(v))); const bar=$('confBar');bar.className='bar '+(v<60?'bad':v<82?'warn':'');bar.firstElementChild.style.width=v+'%';$('confText').textContent='Confiança: '+v+'%'}
+
+function renderResults(rows){
+  rows = Array.isArray(rows) ? rows : [];
+  const table = $('resultTable');
+  if(!table) return;
+  if(!rows.length){
+    table.innerHTML = '<tr><td>Nenhuma resposta lida. Verifique se os 4 marcadores foram encontrados.</td></tr>';
+    const s=$('summary'); if(s) s.textContent='Nenhuma leitura realizada';
+    const save=$('saveStudent'); if(save) save.disabled=true;
+    return;
+  }
+  const key=parseLetters($('answerKey')?.value||'');
+  let lp=0, mat=0, total=0, alertas=0;
+  let html='<tr><th>Q</th><th>Área</th><th>Resposta</th><th>Status</th><th>Gabarito</th><th>Resultado</th></tr>';
+  for(const r of rows){
+    const q=r.questao||r.q;
+    const area=r.area || (q<=26?'Português':'Matemática');
+    const resp=r.resposta||'';
+    const st=r.status||'';
+    const g=key[q-1]||'';
+    let ok='';
+    if(st!=='OK') alertas++;
+    if(g){
+      ok=(st==='OK' && resp===g)?'✅':'❌';
+      if(st==='OK' && resp===g){ total++; if(q<=26)lp++; else mat++; }
+    }
+    const cls=st==='OK'?'res-ok':(st==='DUPLA'||st==='DUVIDOSA'?'res-warn':'res-bad');
+    html+=`<tr><td>${String(q).padStart(2,'0')}</td><td>${area}</td><td>${resp||'-'}</td><td class="${cls}">${st||'-'}${r.note?': '+r.note:''}</td><td>${g||'-'}</td><td>${ok}</td></tr>`;
+  }
+  table.innerHTML=html;
+  const s=$('summary');
+  if(s){
+    if(key.length>=rows.length) s.textContent=`LP ${lp} • MAT ${mat} • Total ${total}/${rows.length} • Alertas ${alertas}`;
+    else s.textContent=`${rows.filter(r=>r.resposta).length}/${rows.length} respostas lidas • Alertas ${alertas}`;
+  }
+  const save=$('saveStudent'); if(save) save.disabled=false;
+  if(typeof renderDescriptorReport==='function') renderDescriptorReport(rows);
+}
+function renderDescriptorReport(rows){
+  const box=$('descReport'); if(!box) return;
+  const key=parseLetters($('answerKey')?.value||''), desc=parseTokens($('descriptors')?.value||'');
+  if(!rows || !rows.length || key.length<rows.length || desc.length<rows.length){
+    box.innerHTML='<table><tr><td>Informe gabarito e descritores para gerar relatório por descritor.</td></tr></table>';
+    return;
+  }
+  const map={};
+  rows.forEach(r=>{
+    const q=r.questao||r.q, d=desc[q-1]||'Sem descritor', area=q<=26?'Português':'Matemática';
+    const k=d+'|'+area; if(!map[k]) map[k]={d,area,total:0,acertos:0};
+    map[k].total++;
+    if(r.status==='OK' && r.resposta===key[q-1]) map[k].acertos++;
+  });
+  let html='<table><tr><th>Descritor</th><th>Área</th><th>Questões</th><th>Acertos</th><th>%</th></tr>';
+  Object.values(map).forEach(v=> html+=`<tr><td>${v.d}</td><td>${v.area}</td><td>${v.total}</td><td>${v.acertos}</td><td>${Math.round(100*v.acertos/v.total)}%</td></tr>`);
+  html+='</table>'; box.innerHTML=html;
+}
+
 function parseLetters(txt){return (txt||'').toUpperCase().match(/[A-E]/g)||[]} function parseTokens(txt){return (txt||'').toUpperCase().replace(/[;,]/g,' ').split(/\s+/).filter(Boolean).slice(0,52)}
 
 function getCourses(){
@@ -188,11 +245,11 @@ $('addStudent').onclick=()=>{
   const rec={nome, curso:$('courseSelect')?.value||'', turma:$('classSelect')?.value||$('studentClass').value.trim(), id:$('studentId').value.trim()||('MANUAL-'+Date.now()), numero:''};
   const i=bank.findIndex(x=>normalizeText(x.nome)===normalizeText(nome)&&normalizeText(x.turma)===normalizeText(rec.turma));
   if(i>=0)bank[i]=rec; else bank.push(rec);
-  localStorage.setItem('omrV13_bank',JSON.stringify(bank)); updateBankUI();
+  localStorage.setItem('omrV14_bank',JSON.stringify(bank)); updateBankUI();
 };
 $('resetDefaultStudents')?.addEventListener('click',()=>{
   if(confirm('Restaurar banco inicial da ETE? Isso mantém alunos manuais e repõe os alunos enviados.')){
-    localStorage.removeItem('omrV13_defaults_loaded'); ensureDefaultStudents(); updateBankUI();
+    localStorage.removeItem('omrV14_defaults_loaded'); ensureDefaultStudents(); updateBankUI();
   }
 });
 $('studentsFile').onchange=async e=>{
@@ -209,7 +266,7 @@ $('studentsFile').onchange=async e=>{
       if(j>=0)bank[j]=rec; else bank.push(rec);
     }
   });
-  localStorage.setItem('omrV13_bank',JSON.stringify(bank)); updateBankUI(); alert('Banco de alunos atualizado.');
+  localStorage.setItem('omrV14_bank',JSON.stringify(bank)); updateBankUI(); alert('Banco de alunos atualizado.');
 };
 $('exportStudents').onclick=()=>{
   const csv=['Curso;Turma;Numero;Nome;ID',...bank.map(s=>[s.curso||'',s.turma||'',s.numero||'',s.nome||'',s.id||''].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(';'))].join('\n');
@@ -305,31 +362,76 @@ function v12StopAutoScan(){
   v12SetAutoStatus('Captura automática: parada', '');
 }
 
-$('openCamera').onclick=async()=>{try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false});video.srcObject=stream;$('cameraBox').style.display='block';$('captureBtn').disabled=false;$('closeCamera').disabled=false; v12StartAutoScan();startAutoScan()}catch(e){alert('Não foi possível abrir a câmera: '+e.message)}}; $('closeCamera').onclick=closeCam; function closeCam(){ v12StopAutoScan(); if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}$('cameraBox').style.display='none';$('captureBtn').disabled=true;$('closeCamera').disabled=true}
 
-let autoScanTimer=null;
-function startAutoScan(){
- if(autoScanTimer) clearInterval(autoScanTimer);
- autoScanTimer=setInterval(()=>{
-   try{
-     if(!stream || !video.videoWidth) return;
-     const c=document.createElement('canvas');
-     c.width=video.videoWidth; c.height=video.videoHeight;
-     c.getContext('2d').drawImage(video,0,0);
-     const markers=(typeof findMarkersOpenCV==='function') ? findMarkersOpenCV(c) : null;
-     if(markers && markers.length===4){
-        const img=new Image();
-        img.onload=()=>{currentImage=img;sourceImages=[img];drawPreview(img); if(typeof processImage==='function') processImage(img,true);};
-        img.src=c.toDataURL('image/jpeg',0.95);
-        clearInterval(autoScanTimer);
-     }
-   }catch(e){}
- },800);
+function setCameraStatus(txt, cls=''){
+  const el=$('cameraStatus'); if(el){el.textContent=txt; el.className='badge '+cls;}
 }
-
-$('captureBtn').onclick=()=>{const c=document.createElement('canvas');c.width=video.videoWidth;c.height=video.videoHeight;c.getContext('2d').drawImage(video,0,0);const img=new Image();img.onload=()=>{currentImage=img;sourceImages=[img];drawPreview(img);$('processBtn').disabled=false;$('calibrateBtn').disabled=false;$('validateModelBtn').disabled=false;setBadge('Foto capturada','ok')};img.src=c.toDataURL('image/jpeg',.95)};
-function drawPreview(img){const maxW=1300,s=Math.min(1,maxW/img.width);preview.width=Math.round(img.width*s);preview.height=Math.round(img.height*s);pctx.drawImage(img,0,0,preview.width,preview.height)}
-$('toggleDebug').onclick=()=>$('debugBox').classList.toggle('hidden'); $('processBtn').onclick=async()=>{if(!currentImage)return; lastResults=await processImage(currentImage,true); renderResults(lastResults); $('saveStudent').disabled=false}; $('processBatchBtn').onclick=processBatch;
+async function openCameraV14(){
+  try{
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      alert('Este navegador não liberou acesso à câmera. Use HTTPS e Safari/Chrome atualizado.');
+      setCameraStatus('Câmera: não suportada','bad');
+      return;
+    }
+    setCameraStatus('Câmera: solicitando permissão...','warn');
+    let constraintsList=[
+      {video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false},
+      {video:{facingMode:'environment'},audio:false},
+      {video:true,audio:false}
+    ];
+    let lastErr=null;
+    for(const cons of constraintsList){
+      try{ stream=await navigator.mediaDevices.getUserMedia(cons); break; }
+      catch(e){ lastErr=e; }
+    }
+    if(!stream) throw lastErr || new Error('Sem permissão de câmera.');
+    video.srcObject=stream;
+    video.setAttribute('playsinline','true');
+    video.setAttribute('autoplay','true');
+    await video.play().catch(()=>{});
+    $('cameraBox').style.display='block';
+    $('captureBtn').disabled=false;
+    $('closeCamera').disabled=false;
+    setCameraStatus('Câmera: aberta','ok');
+    v12StartAutoScan();
+  }catch(e){
+    console.error(e);
+    setCameraStatus('Câmera: falhou','bad');
+    alert('Não foi possível abrir a câmera: '+(e?.message||e));
+  }
+}
+$('openCamera').onclick=openCameraV14;
+$('closeCamera').onclick=closeCam;
+function closeCam(){
+  v12StopAutoScan();
+  if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
+  $('cameraBox').style.display='none';
+  $('captureBtn').disabled=true;
+  $('closeCamera').disabled=true;
+  setCameraStatus('Câmera: fechada','');
+}
+$('captureBtn').onclick=()=>{
+  if(!video.videoWidth){alert('A câmera ainda não carregou a imagem. Aguarde 1 segundo.');return;}
+  const c=document.createElement('canvas');
+  c.width=video.videoWidth; c.height=video.videoHeight;
+  c.getContext('2d').drawImage(video,0,0);
+  const img=new Image();
+  img.onload=()=>{currentImage=img;sourceImages=[img];drawPreview(img);$('processBtn').disabled=false;setBadge('Foto capturada manualmente','ok')};
+  img.src=c.toDataURL('image/jpeg',.95);
+};
+$('processBtn').onclick=async()=>{
+  try{
+    if(!currentImage){alert('Nenhuma imagem carregada. Abra a câmera ou envie uma imagem.');return;}
+    lastResults=await processImage(currentImage,true);
+    renderResults(lastResults);
+    $('saveStudent').disabled=!(lastResults&&lastResults.length);
+  }catch(e){
+    console.error(e);
+    alert('Erro ao ler cartão: '+(e?.message||e));
+    setBadge('Erro na leitura. Abra o console para detalhes.','bad');
+  }
+};
+$('processBatchBtn').onclick=processBatch;
 async function processBatch(){
  if(!sourceImages.length)return;
  let ok=0,fail=0;
@@ -376,23 +478,23 @@ async function processImage(img,show=true){
  if(show)drawMarkers(c,markers);
  const imgData=warp(c,markers); lastWarpedData=imgData; lastMarkers=markers;
 
- // V13: depois da homografia, usa grade fixa matemática como base.
- const layout=buildFixedV13Layout();
+ // V14: depois da homografia, usa grade fixa matemática como base.
+ const layout=buildFixedV14Layout();
  const results=readWithLayout(imgData,layout);
  lastCircles=[];
- const conf=calcConfidenceV13(results, validation);
+ const conf=calcConfidenceV14(results, validation);
  results._confidence=conf; results._markers=markers; results._modelOk=true;
  setConfidence(conf);
  setBadge(conf>82?'Leitura concluída':'Leitura com alertas',conf>82?'ok':'warn');
  return results;
 }
-function calcConfidenceV13(rows, validation){
+function calcConfidenceV14(rows, validation){
  if(!rows || !rows.length) return 0;
  let ok=rows.filter(r=>r.status==='OK').length/Q;
  let avg=rows.reduce((s,r)=>s+(r.confidence||0),0)/rows.length;
  return (ok*.55 + avg*.45)*100;
 }
-function buildFixedV13Layout(){
+function buildFixedV14Layout(){
  const fixedCols=[.083,.325,.561,.760], xStep=.0335, y0=.164, yStep=.0611;
  let layout=[], starts=[1,14,27,40];
  for(let c=0;c<4;c++){
@@ -408,9 +510,15 @@ function buildFixedV13Layout(){
 
 
 try{
-  document.title='Leitor de Cartão-Resposta V13 LIMPA';
-  const h=document.querySelector('header h1'); if(h) h.textContent='Leitor de Cartão-Resposta V13 LIMPA';
-  const badge=document.getElementById('versionBadge'); if(badge) badge.textContent='V13 LIMPA - BUILD 2026-06-16';
+  document.title='Leitor de Cartão-Resposta V14 LIMPA';
+  const h=document.querySelector('header h1'); if(h) h.textContent='Leitor de Cartão-Resposta V14 LIMPA';
+  const badge=document.getElementById('versionBadge'); if(badge) badge.textContent='V14 LIMPA - BUILD 2026-06-16';
+}catch(e){}
+
+try{
+  document.title='Leitor de Cartão-Resposta V14 LIMPA';
+  const h=document.querySelector('header h1'); if(h) h.textContent='Leitor de Cartão-Resposta V14 LIMPA';
+  const badge=document.getElementById('versionBadge'); if(badge) badge.textContent='V14 LIMPA - BUILD 2026-06-16';
 }catch(e){}
 </script>
 </body>
