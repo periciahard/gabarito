@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leitor de Cartão-Resposta - V1</title>
+  <style>
+    :root{
+      --bg:#f3f5f7;--card:#fff;--text:#17202a;--muted:#607080;--line:#d9e1e8;--primary:#1f6feb;--ok:#0f8a3b;--bad:#b42318;--warn:#b7791f;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial, Helvetica, sans-serif;background:var(--bg);color:var(--text)}
+    header{background:#111827;color:#fff;padding:18px 14px;text-align:center}
+    header h1{margin:0;font-size:22px}
+    header p{margin:7px 0 0;color:#d1d5db;font-size:14px}
+    main{max-width:1100px;margin:0 auto;padding:14px}
+    section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    h2{font-size:18px;margin:0 0 10px}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:850px){.grid{grid-template-columns:1fr 1fr}}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    input,button,textarea,select{font-family:Arial, Helvetica, sans-serif;font-size:15px}
+    input[type=file]{width:100%;padding:12px;border:1px dashed var(--line);border-radius:10px;background:#fafafa}
+    button{border:0;border-radius:10px;padding:11px 14px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer}
+    button.secondary{background:#374151}
+    button.danger{background:#b42318}
+    button:disabled{opacity:.55;cursor:not-allowed}
+    .hint{font-size:13px;color:var(--muted);line-height:1.35}
+    canvas{max-width:100%;background:#fff;border:1px solid var(--line);border-radius:10px}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th,td{border:1px solid var(--line);padding:7px;text-align:center}
+    th{background:#f1f5f9}
+    .ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}.warn{color:var(--warn);font-weight:700}
+    .status{padding:10px;border-radius:10px;background:#f8fafc;border:1px solid var(--line);font-size:14px;white-space:pre-wrap}
+    textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:10px;padding:10px}
+    .pill{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2ff;color:#1e3a8a;font-size:12px;font-weight:700}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Leitor de Cartão-Resposta Individual</h1>
+  <p>Versão 1 — leitura visual de cartões com 26 questões e alternativas A–E</p>
+</header>
+<main>
+  <section>
+    <h2>1. Enviar foto do cartão</h2>
+    <input id="fileInput" type="file" accept="image/*" capture="environment" />
+    <p class="hint">Use foto nítida, com boa luz, pegando os quadrados pretos laterais e as duas tabelas de questões. Esta V1 usa regiões proporcionais ao modelo enviado.</p>
+    <div class="row">
+      <button id="btnRead" disabled>Ler cartão-resposta</button>
+      <button id="btnExport" class="secondary" disabled>Exportar CSV</button>
+      <button id="btnClear" class="danger">Limpar</button>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div>
+      <h2>Imagem</h2>
+      <canvas id="canvas"></canvas>
+    </div>
+    <div>
+      <h2>Status</h2>
+      <div id="status" class="status">Aguardando imagem...</div>
+      <p class="hint"><span class="pill">Importante</span> Se houver marcação dupla, rasura ou bolha fraca, o sistema sinaliza como “duvidosa”.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Respostas detectadas</h2>
+    <div id="tableWrap"></div>
+  </section>
+
+  <section>
+    <h2>3. Gabarito oficial para correção</h2>
+    <p class="hint">Opcional. Digite 26 letras, separadas ou não. Exemplo: <b>A D C B E B...</b> ou <b>ADCBE...</b></p>
+    <textarea id="answerKey" placeholder="Cole aqui o gabarito oficial, com 26 alternativas A-E"></textarea>
+    <div class="row">
+      <button id="btnCorrect" class="secondary" disabled>Corrigir</button>
+    </div>
+    <div id="correctionWrap"></div>
+  </section>
+</main>
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const btnRead = document.getElementById('btnRead');
+const btnExport = document.getElementById('btnExport');
+const btnClear = document.getElementById('btnClear');
+const btnCorrect = document.getElementById('btnCorrect');
+const answerKey = document.getElementById('answerKey');
+const statusBox = document.getElementById('status');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d', { willReadFrequently:true });
+const tableWrap = document.getElementById('tableWrap');
+const correctionWrap = document.getElementById('correctionWrap');
+
+let img = new Image();
+let results = [];
+
+// Configuração proporcional aproximada do modelo enviado.
+// Ajuste fino pode ser feito no próprio código caso o cartão mude.
+const MODEL = {
+  left:  { x:0.205, y:0.365, w:0.325, h:0.515, rows:13, firstQ:1 },
+  right: { x:0.630, y:0.365, w:0.325, h:0.515, rows:13, firstQ:14 },
+  alternatives:['A','B','C','D','E'],
+  // Dentro de cada linha, centros das bolhas em relação à largura da tabela de alternativas.
+  colCenters:[0.085,0.300,0.515,0.730,0.940],
+  rowCenterOffset:0.50,
+  radiusFactor:0.030
+};
+
+fileInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  img.onload = () => {
+    const maxW = 1200;
+    const scale = Math.min(1, maxW / img.width);
+    canvas.width = Math.round(img.width * scale);
+    canvas.height = Math.round(img.height * scale);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    statusBox.textContent = 'Imagem carregada. Clique em “Ler cartão-resposta”.';
+    btnRead.disabled = false;
+    URL.revokeObjectURL(url);
+  };
+  img.src = url;
+});
+
+btnRead.addEventListener('click', readCard);
+btnExport.addEventListener('click', exportCSV);
+btnClear.addEventListener('click', clearAll);
+btnCorrect.addEventListener('click', correctAnswers);
+
+function readCard(){
+  if(!canvas.width) return;
+  results = [];
+  drawImageOnly();
+  readBlock(MODEL.left);
+  readBlock(MODEL.right);
+  results.sort((a,b)=>a.q-b.q);
+  renderResults();
+  btnExport.disabled = results.length===0;
+  btnCorrect.disabled = results.length===0;
+  const duv = results.filter(r=>r.status!=='ok').length;
+  statusBox.textContent = `Leitura concluída. ${results.length} questões analisadas. ${duv} questão(ões) exigem conferência manual.`;
+}
+
+function drawImageOnly(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.drawImage(img,0,0,canvas.width,canvas.height);
+}
+
+function readBlock(block){
+  const bx = block.x * canvas.width;
+  const by = block.y * canvas.height;
+  const bw = block.w * canvas.width;
+  const bh = block.h * canvas.height;
+  const rowH = bh / block.rows;
+  const radius = Math.max(8, Math.min(canvas.width, canvas.height) * MODEL.radiusFactor);
+
+  // caixa visual da área analisada
+  ctx.strokeStyle = '#1f6feb';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(bx, by, bw, bh);
+
+  for(let r=0;r<block.rows;r++){
+    const q = block.firstQ + r;
+    const cy = by + rowH * (r + MODEL.rowCenterOffset);
+    const scores = [];
+    for(let c=0;c<5;c++){
+      const cx = bx + bw * MODEL.colCenters[c];
+      const score = darknessScore(cx, cy, radius);
+      scores.push({alt:MODEL.alternatives[c], score, cx, cy});
+    }
+    scores.sort((a,b)=>b.score-a.score);
+    const top = scores[0];
+    const second = scores[1];
+    let status = 'ok';
+    let answer = top.alt;
+
+    // Limiares empíricos. Ajustáveis conforme impressão/caneta.
+    if(top.score < 0.18){ status = 'branco'; answer = ''; }
+    else if(second.score > 0.70 * top.score && second.score > 0.16){ status = 'dupla/duvidosa'; answer = top.alt + '?'; }
+    else if(top.score < 0.26){ status = 'fraca/duvidosa'; answer = top.alt + '?'; }
+
+    results.push({q, answer, status, scores});
+    drawDetection(top.cx, top.cy, radius, status);
+  }
+}
+
+function darknessScore(cx, cy, radius){
+  const x0 = Math.max(0, Math.floor(cx-radius));
+  const y0 = Math.max(0, Math.floor(cy-radius));
+  const size = Math.floor(radius*2);
+  const data = ctx.getImageData(x0,y0,size,size).data;
+  let count=0, dark=0;
+  for(let y=0;y<size;y++){
+    for(let x=0;x<size;x++){
+      const dx=x-radius, dy=y-radius;
+      if(dx*dx+dy*dy <= radius*radius){
+        const i=(y*size+x)*4;
+        const lum = 0.299*data[i] + 0.587*data[i+1] + 0.114*data[i+2];
+        // valor ponderado: quanto mais escuro, maior a pontuação
+        dark += Math.max(0, (245-lum)/245);
+        count++;
+      }
+    }
+  }
+  return count ? dark/count : 0;
+}
+
+function drawDetection(cx,cy,r,status){
+  ctx.beginPath();
+  ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.lineWidth=3;
+  ctx.strokeStyle = status==='ok' ? '#0f8a3b' : (status==='branco' ? '#b42318' : '#b7791f');
+  ctx.stroke();
+}
+
+function renderResults(){
+  let html = '<table><thead><tr><th>Questão</th><th>Resposta</th><th>Status</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead><tbody>';
+  results.forEach(r=>{
+    const cls = r.status==='ok'?'ok':(r.status==='branco'?'bad':'warn');
+    const scoreMap = {};
+    r.scores.forEach(s=>scoreMap[s.alt]=s.score);
+    html += `<tr><td>Q${String(r.q).padStart(2,'0')}</td><td contenteditable="true" oninput="manualEdit(${r.q}, this.innerText)">${r.answer || '-'}</td><td class="${cls}">${r.status}</td>`;
+    MODEL.alternatives.forEach(a=> html += `<td>${(scoreMap[a]||0).toFixed(2)}</td>`);
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  tableWrap.innerHTML = html;
+}
+
+window.manualEdit = function(q, text){
+  const r = results.find(x=>x.q===q);
+  if(!r) return;
+  const clean = (text||'').toUpperCase().replace(/[^A-E]/g,'').slice(0,1);
+  r.answer = clean;
+  r.status = clean ? 'ok' : 'branco';
+};
+
+function parseKey(){
+  return answerKey.value.toUpperCase().replace(/[^A-E]/g,'').split('').slice(0,26);
+}
+
+function correctAnswers(){
+  const key = parseKey();
+  if(key.length < 26){ alert('Informe um gabarito com 26 alternativas A-E.'); return; }
+  let correct = 0;
+  let html = '<table><thead><tr><th>Questão</th><th>Aluno</th><th>Gabarito</th><th>Situação</th></tr></thead><tbody>';
+  results.forEach((r,i)=>{
+    const ans = (r.answer||'').replace('?','');
+    const ok = ans && ans === key[i] && r.status === 'ok';
+    if(ok) correct++;
+    html += `<tr><td>Q${String(r.q).padStart(2,'0')}</td><td>${r.answer || '-'}</td><td>${key[i]}</td><td class="${ok?'ok':'bad'}">${ok?'Certo':'Errado/Conferir'}</td></tr>`;
+  });
+  html += `</tbody></table><p><b>Resultado:</b> ${correct}/26 acertos — Nota: ${(correct/26*10).toFixed(2)}</p>`;
+  correctionWrap.innerHTML = html;
+}
+
+function exportCSV(){
+  const rows = [['Questao','Resposta','Status']];
+  results.forEach(r=>rows.push([`Q${String(r.q).padStart(2,'0')}`, r.answer||'', r.status]));
+  const csv = rows.map(row=>row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(';')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'leitura_cartao_resposta.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function clearAll(){
+  fileInput.value=''; answerKey.value=''; results=[]; tableWrap.innerHTML=''; correctionWrap.innerHTML='';
+  ctx.clearRect(0,0,canvas.width,canvas.height); canvas.width=0; canvas.height=0;
+  btnRead.disabled=true; btnExport.disabled=true; btnCorrect.disabled=true;
+  statusBox.textContent='Aguardando imagem...';
+}
+</script>
+</body>
+</html>
