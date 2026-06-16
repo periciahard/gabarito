@@ -2,7 +2,10 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+<meta name="theme-color" content="#020617" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
 <title>Leitor de Cartão-Resposta 52 questões</title>
 <style>
 :root{--bg:#0f172a;--card:#111827;--soft:#1f2937;--txt:#e5e7eb;--mut:#9ca3af;--ok:#22c55e;--bad:#ef4444;--warn:#f59e0b;--pri:#38bdf8}
@@ -13,7 +16,21 @@ label{display:block;font-weight:bold;margin:10px 0 6px}input,textarea,button,sel
 .previewWrap{position:relative;overflow:hidden;border-radius:12px;background:#020617;border:1px solid #334155;min-height:260px;display:flex;align-items:center;justify-content:center}.previewWrap video,.previewWrap canvas,.previewWrap img{max-width:100%;display:block}.guide{position:absolute;inset:0;pointer-events:none}.target{position:absolute;width:58px;height:58px;border:3px solid #22c55e;border-radius:8px;background:rgba(34,197,94,.08)}.tl{left:8%;top:7%}.tr{right:8%;top:7%}.bl{left:8%;bottom:7%}.br{right:8%;bottom:7%}.guideText{position:absolute;left:10px;right:10px;bottom:10px;padding:8px;border-radius:10px;background:rgba(0,0,0,.55);font-size:12px;color:#fff;text-align:center}.status{padding:10px;border-radius:10px;background:#020617;border:1px solid #334155;margin-top:10px;white-space:pre-wrap}.ok{color:var(--ok)}.bad{color:var(--bad)}.warnc{color:var(--warn)}
 table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}th,td{border:1px solid #334155;padding:6px;text-align:center}th{background:#0f172a;position:sticky;top:64px}.subject{font-weight:bold;background:#172554}.duvida{background:rgba(245,158,11,.18)}.erro{background:rgba(239,68,68,.16)}.acerto{background:rgba(34,197,94,.15)}
 .badge{display:inline-block;padding:2px 8px;border-radius:999px;background:#334155;color:#e5e7eb;font-size:12px}.pill{display:inline-block;margin:2px;padding:3px 8px;border-radius:999px;background:#020617;border:1px solid #475569}.hidden{display:none!important}
+
+/* V4 Mobile: ajustes para celular */
+html,body{min-height:100%;-webkit-text-size-adjust:100%;touch-action:manipulation}
+body{padding-bottom:env(safe-area-inset-bottom)}
+header{padding:14px 12px} h1{font-size:18px} h2{font-size:17px;margin:4px 0 10px}
+.wrap{padding:10px}.box{padding:12px;border-radius:16px}.grid{gap:10px}
+button,input,textarea,select{font-size:16px}button{min-height:46px}.row{gap:7px}.row>*{min-width:132px}
+.previewWrap{min-height:62vh;max-height:72vh;border-radius:16px}.previewWrap video,.previewWrap canvas{width:100%;height:100%;object-fit:contain}.guide{display:block}.target{width:46px;height:46px;border-width:3px}.tl{left:5%;top:5%}.tr{right:5%;top:5%}.bl{left:5%;bottom:5%}.br{right:5%;bottom:5%}.guideText{font-size:13px;bottom:8px;padding:9px 10px}
+.mobileBar{position:sticky;bottom:0;z-index:5;background:rgba(2,6,23,.95);backdrop-filter:blur(8px);padding:8px calc(8px + env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));border-top:1px solid #334155;margin:12px -12px -12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#capturar,#ler{font-size:17px}.status{font-size:14px;max-height:120px;overflow:auto}table{font-size:12px}th,td{padding:6px 5px}th{top:54px}textarea{min-height:74px}
+@media(max-width:520px){.row{display:grid;grid-template-columns:1fr 1fr}.row>*{min-width:0}.previewWrap{min-height:58vh}.box:nth-child(2){margin-top:2px}table{font-size:11px}th:nth-child(1),td:nth-child(1){display:none}.target{width:42px;height:42px}.guideText{font-size:12px}.small{font-size:11px}}
+@media(orientation:landscape) and (max-height:520px){.previewWrap{min-height:68vh}.wrap{padding:8px}.grid{grid-template-columns:1fr 1fr}.box{padding:10px}header p{display:none}}
+
 </style>
+<link rel="manifest" href="manifest.webmanifest" />
 </head>
 <body>
 <header><h1>Leitor de Cartão-Resposta — 52 questões</h1><p>Português: Q1 a Q26 • Matemática: Q27 a Q52. Tire a foto alinhando os 4 quadrados pretos dentro dos espaços verdes.</p></header>
@@ -24,9 +41,9 @@ table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}th,td{b
   <div class="row">
     <button id="abrirCamera">Abrir câmera</button><button id="capturar" class="good" disabled>Fotografar</button>
   </div>
-  <label>Ou enviar imagem</label><input id="arquivo" type="file" accept="image/*" />
+  <label>Ou enviar imagem</label><input id="arquivo" type="file" accept="image/*" capture="environment" />
   <div class="previewWrap" id="previewWrap"><video id="video" class="hidden" playsinline></video><canvas id="canvasFoto" class="hidden"></canvas><div class="guide" id="guide"><div class="target tl"></div><div class="target tr"></div><div class="target bl"></div><div class="target br"></div><div class="guideText">Enquadre os 4 quadrados pretos do cartão dentro dos 4 espaços verdes.</div></div><span id="semFoto" class="small">Nenhuma imagem carregada.</span></div>
-  <div class="row" style="margin-top:10px"><button id="ler" class="good">Ler cartão</button><button id="limpar" class="danger">Limpar</button></div>
+  <div class="mobileBar"><button id="ler" class="good">Ler cartão</button><button id="limpar" class="danger">Limpar</button></div>
   <div class="status" id="status">Aguardando foto.</div>
   <details style="margin-top:10px"><summary>Ajustes finos</summary>
     <div class="row"><div><label>Sensibilidade da marcação</label><input id="sens" type="range" min="1" max="100" value="48"><span id="sensv" class="small">48</span></div><div><label>Marcar dúvida se diferença menor que</label><input id="duvida" type="range" min="1" max="40" value="10"><span id="duvidav" class="small">10%</span></div></div>
@@ -50,9 +67,9 @@ function subj(q){return q<=26?'Português':'Matemática'}
 function localQ(q){return q<=26?q:q-26}
 function clear(){respostas=[];render();status('Aguardando foto.');el('canvasFoto').classList.add('hidden');el('semFoto').classList.remove('hidden')}
 el('sens').oninput=()=>el('sensv').textContent=el('sens').value;el('duvida').oninput=()=>el('duvidav').textContent=el('duvida').value+'%';
-el('abrirCamera').onclick=async()=>{try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1920},height:{ideal:1080}},audio:false});el('video').srcObject=stream;await el('video').play();el('video').classList.remove('hidden');el('canvasFoto').classList.add('hidden');el('semFoto').classList.add('hidden');el('capturar').disabled=false;status('Câmera aberta. Alinhe os 4 quadrados pretos nos espaços verdes.','ok')}catch(e){status('Não foi possível abrir a câmera: '+e.message,'bad')}};
-el('capturar').onclick=()=>{let v=el('video'),c=el('canvasFoto'),ctx=c.getContext('2d');c.width=v.videoWidth;c.height=v.videoHeight;ctx.drawImage(v,0,0);c.classList.remove('hidden');el('video').classList.add('hidden');imgCanvas=c;status('Foto capturada. Clique em Ler cartão.','ok')};
-el('arquivo').onchange=ev=>{let f=ev.target.files[0];if(!f)return;let img=new Image();img.onload=()=>{let c=el('canvasFoto'),ctx=c.getContext('2d');let max=1800,scale=Math.min(1,max/Math.max(img.width,img.height));c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);ctx.drawImage(img,0,0,c.width,c.height);c.classList.remove('hidden');el('video').classList.add('hidden');el('semFoto').classList.add('hidden');imgCanvas=c;status('Imagem carregada. Clique em Ler cartão.','ok')};img.src=URL.createObjectURL(f)};
+el('abrirCamera').onclick=async()=>{try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:2560},aspectRatio:{ideal:0.75}},audio:false});el('video').srcObject=stream;await el('video').play();el('video').classList.remove('hidden');el('canvasFoto').classList.add('hidden');el('semFoto').classList.add('hidden');el('capturar').disabled=false;status('Câmera aberta. Alinhe os 4 quadrados pretos nos espaços verdes.','ok');el('previewWrap').scrollIntoView({behavior:'smooth',block:'center'})}catch(e){status('Não foi possível abrir a câmera: '+e.message,'bad')}};
+el('capturar').onclick=()=>{let v=el('video'),c=el('canvasFoto'),ctx=c.getContext('2d');c.width=v.videoWidth;c.height=v.videoHeight;ctx.drawImage(v,0,0);c.classList.remove('hidden');el('video').classList.add('hidden');imgCanvas=c;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}status('Foto capturada. Clique em Ler cartão.','ok');el('ler').scrollIntoView({behavior:'smooth',block:'center'})};
+el('arquivo').onchange=ev=>{let f=ev.target.files[0];if(!f)return;let img=new Image();img.onload=()=>{let c=el('canvasFoto'),ctx=c.getContext('2d');let max=1800,scale=Math.min(1,max/Math.max(img.width,img.height));c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);ctx.drawImage(img,0,0,c.width,c.height);c.classList.remove('hidden');el('video').classList.add('hidden');el('semFoto').classList.add('hidden');imgCanvas=c;status('Imagem carregada. Clique em Ler cartão.','ok');el('previewWrap').scrollIntoView({behavior:'smooth',block:'center'})};img.src=URL.createObjectURL(f)};
 el('limpar').onclick=clear;
 function grayAt(data,w,x,y){let i=(y*w+x)*4;return (data[i]+data[i+1]+data[i+2])/3}
 function findMarkers(c){let w=c.width,h=c.height,ctx=c.getContext('2d'),im=ctx.getImageData(0,0,w,h),d=im.data;let step=Math.max(2,Math.floor(Math.max(w,h)/650));let pts=[];for(let y=0;y<h;y+=step){for(let x=0;x<w;x+=step){let g=grayAt(d,w,x,y);if(g<55)pts.push({x,y})}} if(pts.length<20) return null;
