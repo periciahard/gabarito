@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Leitor de Cartão-Resposta V10</title>
+<title>Leitor de Cartão-Resposta V11</title>
 <style>
 :root{--bg:#f3f4f6;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d1d5db;--ok:#16a34a;--warn:#ca8a04;--bad:#dc2626;--blue:#2563eb;--soft:#eef2ff}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif} header{position:sticky;top:0;z-index:9;background:#111827;color:#fff;padding:12px 14px;box-shadow:0 2px 10px #0005} header h1{margin:0;font-size:18px} header small{color:#d1d5db} main{padding:12px;max-width:1180px;margin:auto}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;box-shadow:0 2px 10px #0001}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.grid{display:grid;gap:10px}.cols2{grid-template-columns:repeat(2,minmax(0,1fr))}.cols3{grid-template-columns:repeat(3,minmax(0,1fr))}button,label.filebtn{border:0;border-radius:10px;background:#111827;color:#fff;padding:12px 14px;font-weight:700;cursor:pointer;display:inline-block}button.secondary{background:#e5e7eb;color:#111827}button.ok{background:var(--ok)}button.warn{background:var(--warn)}button.bad{background:var(--bad)}button.blue{background:var(--blue)}button:disabled{opacity:.45;cursor:not-allowed}input,textarea,select{border:1px solid var(--line);border-radius:10px;padding:11px;font-size:16px;width:100%;background:#fff}input[type=file]{display:none}.hint{font-size:13px;color:var(--muted);line-height:1.35}.badge{display:inline-block;border-radius:999px;padding:5px 9px;background:#e5e7eb;font-size:12px;font-weight:700}.badge.ok{background:#dcfce7;color:#166534}.badge.warn{background:#fef3c7;color:#854d0e}.badge.bad{background:#fee2e2;color:#991b1b}.badge.blue{background:#dbeafe;color:#1e40af}.canvasWrap{position:relative;width:100%;overflow:auto;background:#e5e7eb;border-radius:12px;border:1px solid var(--line)}canvas{max-width:100%;height:auto;display:block;margin:auto;background:#fff}#cameraBox{position:relative;display:none;background:#000;border-radius:14px;overflow:hidden}video{width:100%;display:block}.overlay{position:absolute;inset:0;pointer-events:none}.target{position:absolute;width:54px;height:54px;border:4px solid #ef4444;border-radius:8px}.target.ok{border-color:#22c55e}.tl{left:6%;top:16%}.tr{right:6%;top:16%}.bl{left:6%;bottom:12%}.br{right:6%;bottom:12%}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid var(--line);padding:6px;text-align:center}th{background:#f9fafb}.res-ok{color:var(--ok);font-weight:700}.res-warn{color:var(--warn);font-weight:700}.res-bad{color:var(--bad);font-weight:700}details summary{cursor:pointer;font-weight:700}.bar{height:18px;background:#e5e7eb;border-radius:999px;overflow:hidden;min-width:180px}.bar>div{height:100%;background:var(--ok);width:0%;transition:.2s}.bar.warn>div{background:var(--warn)}.bar.bad>div{background:var(--bad)}.pill{background:#f9fafb;border:1px solid var(--line);border-radius:12px;padding:10px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.tabs button{padding:9px 11px}.hidden{display:none!important}@media(max-width:760px){.cols2,.cols3{grid-template-columns:1fr}header h1{font-size:16px}button,label.filebtn{width:100%;text-align:center}.row>*{flex:1 1 100%}}
@@ -195,7 +195,28 @@ $('exportStudents').onclick=()=>{
   downloadBlob(csv,'banco_alunos_ete_v9.csv','text/csv;charset=utf-8')
 };
 $('fileInput').onchange=e=>loadFiles([...e.target.files]); async function loadFiles(files){sourceImages=[]; for(const f of files){const img=await fileToImage(f); img.__name=f.name; sourceImages.push(img)} currentIndex=0; currentImage=sourceImages[0]||null; if(currentImage){drawPreview(currentImage);$('processBtn').disabled=false;$('calibrateBtn').disabled=false;$('validateModelBtn').disabled=false;$('processBatchBtn').disabled=sourceImages.length<2;setBadge(sourceImages.length+' imagem(ns) carregada(s)','ok')}} function fileToImage(f){return new Promise(res=>{const img=new Image();img.onload=()=>res(img);img.src=URL.createObjectURL(f)})}
-$('openCamera').onclick=async()=>{try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false});video.srcObject=stream;$('cameraBox').style.display='block';$('captureBtn').disabled=false;$('closeCamera').disabled=false}catch(e){alert('Não foi possível abrir a câmera: '+e.message)}}; $('closeCamera').onclick=closeCam; function closeCam(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}$('cameraBox').style.display='none';$('captureBtn').disabled=true;$('closeCamera').disabled=true}
+$('openCamera').onclick=async()=>{try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false});video.srcObject=stream;$('cameraBox').style.display='block';$('captureBtn').disabled=false;$('closeCamera').disabled=false;startAutoScan()}catch(e){alert('Não foi possível abrir a câmera: '+e.message)}}; $('closeCamera').onclick=closeCam; function closeCam(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}$('cameraBox').style.display='none';$('captureBtn').disabled=true;$('closeCamera').disabled=true}
+
+let autoScanTimer=null;
+function startAutoScan(){
+ if(autoScanTimer) clearInterval(autoScanTimer);
+ autoScanTimer=setInterval(()=>{
+   try{
+     if(!stream || !video.videoWidth) return;
+     const c=document.createElement('canvas');
+     c.width=video.videoWidth; c.height=video.videoHeight;
+     c.getContext('2d').drawImage(video,0,0);
+     const markers=(typeof findMarkersOpenCV==='function') ? findMarkersOpenCV(c) : null;
+     if(markers && markers.length===4){
+        const img=new Image();
+        img.onload=()=>{currentImage=img;sourceImages=[img];drawPreview(img); if(typeof processImage==='function') processImage(img,true);};
+        img.src=c.toDataURL('image/jpeg',0.95);
+        clearInterval(autoScanTimer);
+     }
+   }catch(e){}
+ },800);
+}
+
 $('captureBtn').onclick=()=>{const c=document.createElement('canvas');c.width=video.videoWidth;c.height=video.videoHeight;c.getContext('2d').drawImage(video,0,0);const img=new Image();img.onload=()=>{currentImage=img;sourceImages=[img];drawPreview(img);$('processBtn').disabled=false;$('calibrateBtn').disabled=false;$('validateModelBtn').disabled=false;setBadge('Foto capturada','ok')};img.src=c.toDataURL('image/jpeg',.95)};
 function drawPreview(img){const maxW=1300,s=Math.min(1,maxW/img.width);preview.width=Math.round(img.width*s);preview.height=Math.round(img.height*s);pctx.drawImage(img,0,0,preview.width,preview.height)}
 $('toggleDebug').onclick=()=>$('debugBox').classList.toggle('hidden'); $('processBtn').onclick=async()=>{if(!currentImage)return; lastResults=await processImage(currentImage,true); renderResults(lastResults); $('saveStudent').disabled=false}; $('processBatchBtn').onclick=processBatch;
