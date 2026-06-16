@@ -1,5 +1,5 @@
-// V12 LIMPA: service worker sem cache persistente. Remove caches antigos e deixa a rede mandar a versão atual.
-const CACHE = 'leitor-omr-v12-limpa-20260616';
+// V13 LIMPA: sem cache persistente e removendo versões antigas.
+const CACHE = 'leitor-omr-v13-limpa-20260616';
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))));

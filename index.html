@@ -8,7 +8,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Leitor de Cartão-Resposta V12 LIMPA</title>
+<title>Leitor de Cartão-Resposta V13 LIMPA</title>
 <style>
 :root{--bg:#f3f4f6;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#d1d5db;--ok:#16a34a;--warn:#ca8a04;--bad:#dc2626;--blue:#2563eb;--soft:#eef2ff}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif} header{position:sticky;top:0;z-index:9;background:#111827;color:#fff;padding:12px 14px;box-shadow:0 2px 10px #0005} header h1{margin:0;font-size:18px} header small{color:#d1d5db} main{padding:12px;max-width:1180px;margin:auto}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;box-shadow:0 2px 10px #0001}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.grid{display:grid;gap:10px}.cols2{grid-template-columns:repeat(2,minmax(0,1fr))}.cols3{grid-template-columns:repeat(3,minmax(0,1fr))}button,label.filebtn{border:0;border-radius:10px;background:#111827;color:#fff;padding:12px 14px;font-weight:700;cursor:pointer;display:inline-block}button.secondary{background:#e5e7eb;color:#111827}button.ok{background:var(--ok)}button.warn{background:var(--warn)}button.bad{background:var(--bad)}button.blue{background:var(--blue)}button:disabled{opacity:.45;cursor:not-allowed}input,textarea,select{border:1px solid var(--line);border-radius:10px;padding:11px;font-size:16px;width:100%;background:#fff}input[type=file]{display:none}.hint{font-size:13px;color:var(--muted);line-height:1.35}.badge{display:inline-block;border-radius:999px;padding:5px 9px;background:#e5e7eb;font-size:12px;font-weight:700}.badge.ok{background:#dcfce7;color:#166534}.badge.warn{background:#fef3c7;color:#854d0e}.badge.bad{background:#fee2e2;color:#991b1b}.badge.blue{background:#dbeafe;color:#1e40af}.canvasWrap{position:relative;width:100%;overflow:auto;background:#e5e7eb;border-radius:12px;border:1px solid var(--line)}canvas{max-width:100%;height:auto;display:block;margin:auto;background:#fff}#cameraBox{position:relative;display:none;background:#000;border-radius:14px;overflow:hidden}video{width:100%;display:block}.overlay{position:absolute;inset:0;pointer-events:none}.target{position:absolute;width:54px;height:54px;border:4px solid #ef4444;border-radius:8px}.target.ok{border-color:#22c55e}.tl{left:6%;top:16%}.tr{right:6%;top:16%}.bl{left:6%;bottom:12%}.br{right:6%;bottom:12%}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid var(--line);padding:6px;text-align:center}th{background:#f9fafb}.res-ok{color:var(--ok);font-weight:700}.res-warn{color:var(--warn);font-weight:700}.res-bad{color:var(--bad);font-weight:700}details summary{cursor:pointer;font-weight:700}.bar{height:18px;background:#e5e7eb;border-radius:999px;overflow:hidden;min-width:180px}.bar>div{height:100%;background:var(--ok);width:0%;transition:.2s}.bar.warn>div{background:var(--warn)}.bar.bad>div{background:var(--bad)}.pill{background:#f9fafb;border:1px solid var(--line);border-radius:12px;padding:10px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.tabs button{padding:9px 11px}.hidden{display:none!important}@media(max-width:760px){.cols2,.cols3{grid-template-columns:1fr}header h1{font-size:16px}button,label.filebtn{width:100%;text-align:center}.row>*{flex:1 1 100%}}
@@ -20,9 +20,9 @@ if(!window.XLSX){document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@
 </script>
 </head>
 <body>
-<div id="versionBadge" style="position:fixed;top:8px;right:8px;z-index:999999;background:#dc2626;color:white;padding:8px 12px;border-radius:10px;font-weight:800;font-family:Arial;box-shadow:0 2px 8px #0005">V12 LIMPA - BUILD 2026-06-16</div>
+<div id="versionBadge" style="position:fixed;top:8px;right:8px;z-index:999999;background:#dc2626;color:white;padding:8px 12px;border-radius:10px;font-weight:800;font-family:Arial;box-shadow:0 2px 8px #0005">V13 LIMPA - BUILD 2026-06-16</div>
 
-<header><h1>Leitor de Cartão-Resposta V12 LIMPA</h1><small>Build 2026-06-16 • sem cache antigo • captura automática • cartão V10/V12</small></header>
+<header><h1>Leitor de Cartão-Resposta V13 LIMPA</h1><small>Build 2026-06-16 • leitura bloqueada sem 4 marcadores • cartão V10/V13</small></header>
 <main>
 <section class="card"><div class="row"><span id="cvStatus" class="badge warn">Carregando OpenCV...</span><span id="sheetStatus" class="badge blue">XLSX aguardando</span><span class="badge">52 questões: 1–26 Português | 27–52 Matemática</span></div><p class="hint">V12 limpa: versão sem cache antigo, com identificação visível e captura automática.</p></section>
 <section class="card">
@@ -56,9 +56,9 @@ if(!window.XLSX){document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@
   </div>
   <p class="hint">Escolha o curso, depois a turma, e o sistema mostra apenas os alunos daquela turma. O banco inicial já contém as listas enviadas de Administração e Redes de Computadores.</p>
 </section>
-<section class="card"><div class="row"><button class="blue" id="openCamera">Abrir câmera</button><button class="ok" id="captureBtn" disabled>Fotografar</button><button class="secondary" id="closeCamera" disabled>Fechar câmera</button><label class="filebtn" for="fileInput">Enviar imagem(ns)</label><input id="fileInput" type="file" accept="image/*" multiple></div><div class="row" style="margin-top:10px"><span id="autoScanStatus" class="badge warn">Captura automática: aguardando câmera</span><span id="markerStatus" class="badge">Marcadores: --</span></div><div id="cameraBox" style="margin-top:12px"><video id="video" autoplay playsinline></video><div class="overlay"><div class="target tl"></div><div class="target tr"></div><div class="target bl"></div><div class="target br"></div></div></div></section>
+<section class="card"><div class="row"><button class="blue" id="openCamera">Abrir câmera</button><button class="ok" id="captureBtn" disabled>Fotografar</button><button class="secondary" id="closeCamera" disabled>Fechar câmera</button><label class="filebtn" for="fileInput">Enviar imagem(ns)</label><input id="fileInput" type="file" accept="image/*" multiple></div><div class="row" style="margin-top:10px"><span id="autoScanStatus" class="badge warn">Captura automática: aguardando câmera</span><span id="markerStatus" class="badge">Marcadores: --</span><span id="markerDiag" class="badge">Candidatos: --</span></div><div id="cameraBox" style="margin-top:12px"><video id="video" autoplay playsinline></video><div class="overlay"><div class="target tl"></div><div class="target tr"></div><div class="target bl"></div><div class="target br"></div></div></div></section>
 <section class="card"><details open><summary>Gabarito, descritores e áreas</summary><div class="grid cols2" style="margin-top:10px"><div><label>Gabarito oficial (52 letras)</label><textarea id="answerKey" rows="4" placeholder="A B C D E ..."></textarea></div><div><label>Descritores (52 itens)</label><textarea id="descriptors" rows="4" placeholder="D1 D2 D3 ..."></textarea></div></div><p class="hint">Os descritores podem ser separados por espaço, vírgula, ponto e vírgula ou quebra de linha. O relatório agrupa acertos por descritor.</p></details></section>
-<section class="card"><div class="row"><button id="processBtn" disabled>Ler cartão atual</button><button class="warn" id="processBatchBtn" disabled>Ler lote</button><button class="secondary" id="toggleDebug">Mostrar/ocultar debug</button><button class="secondary" id="runTests">Teste automático</button></div><div class="row" style="margin-top:10px"><span id="qualityBadge" class="badge">Aguardando imagem</span><div class="bar" id="confBar"><div></div></div><span id="confText" class="badge">Confiança: --</span></div><div class="canvasWrap" style="margin-top:10px"><canvas id="preview"></canvas></div><div id="debugBox" class="hidden"><div class="grid cols2"><div class="canvasWrap" style="margin-top:10px"><canvas id="warped"></canvas></div><div class="canvasWrap" style="margin-top:10px"><canvas id="debug"></canvas></div></div></div></section>
+<section class="card"><div class="row"><button id="processBtn" disabled>Ler cartão atual</button><button class="warn" id="processBatchBtn" disabled>Ler lote</button><button class="secondary" id="toggleDebug">Mostrar/ocultar debug</button><button class="secondary" id="runTests">Teste automático</button></div><div class="row" style="margin-top:10px"><span id="qualityBadge" class="badge">Aguardando imagem</span><span id="hardGateBadge" class="badge warn">Leitura bloqueada até encontrar 4 marcadores reais</span><div class="bar" id="confBar"><div></div></div><span id="confText" class="badge">Confiança: --</span></div><div class="canvasWrap" style="margin-top:10px"><canvas id="preview"></canvas></div><div id="debugBox" class="hidden"><div class="grid cols2"><div class="canvasWrap" style="margin-top:10px"><canvas id="warped"></canvas></div><div class="canvasWrap" style="margin-top:10px"><canvas id="debug"></canvas></div></div></div></section>
 <section class="card"><h2 style="margin-top:0">Resultado da leitura</h2><div class="row"><span id="summary" class="badge">Nenhuma leitura realizada</span><button class="ok" id="saveStudent" disabled>Salvar leitura</button><button class="blue" id="exportXlsx" disabled>Exportar XLSX</button><button class="blue" id="exportCsv" disabled>Exportar CSV</button><button class="secondary" id="clearReadings">Limpar leituras</button></div><div style="overflow:auto;margin-top:10px"><table id="resultTable"></table></div></section>
 <section class="card"><h2 style="margin-top:0">Relatório por descritor</h2><div id="descReport" style="overflow:auto"><table><tr><td>Nenhum relatório gerado.</td></tr></table></div></section>
 <section class="card"><h2 style="margin-top:0">Leituras salvas</h2><div style="overflow:auto"><table id="studentsTable"></table></div></section>
@@ -78,7 +78,7 @@ if(!window.XLSX){document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@
 <section class="card"><h2 style="margin-top:0">Testes automáticos</h2><div id="testOutput" class="hint">Clique em “Teste automático” para validar dupla marcação, branco, leitura cheia e exportação.</div></section>
 </main>
 <script>
-// V12 LIMPA: remove service workers e caches antigos para acabar com V12/V12/V12 presas no navegador.
+// V13 LIMPA: remove service workers e caches antigos para acabar com V13/V13/V13 presas no navegador.
 (async function v12CleanBoot(){
   try{
     if('serviceWorker' in navigator){
@@ -89,15 +89,15 @@ if(!window.XLSX){document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@
       const keys = await caches.keys();
       await Promise.all(keys.map(k => caches.delete(k)));
     }
-    console.log('V12 LIMPA carregada - caches antigos removidos');
-  }catch(e){ console.warn('V12 cleanup falhou:', e); }
+    console.log('V13 LIMPA carregada - caches antigos removidos');
+  }catch(e){ console.warn('V13 cleanup falhou:', e); }
 })();
 
 
 const $=id=>document.getElementById(id); const preview=$('preview'),pctx=preview.getContext('2d',{willReadFrequently:true}); const warped=$('warped'),wctx=warped.getContext('2d',{willReadFrequently:true}); const debug=$('debug'),dctx=debug.getContext('2d',{willReadFrequently:true}); const video=$('video');
-let cvReady=false, sourceImages=[], currentImage=null, currentIndex=0, stream=null, lastResults=[], saved=JSON.parse(localStorage.getItem('omrV12_saved')||'[]'), bank=JSON.parse(localStorage.getItem('omrV12_bank')||'[]');
+let cvReady=false, sourceImages=[], currentImage=null, currentIndex=0, stream=null, lastResults=[], saved=JSON.parse(localStorage.getItem('omrV13_saved')||'[]'), bank=JSON.parse(localStorage.getItem('omrV13_bank')||'[]');
 const W=1600,H=620, Q=52, ALTS='ABCDE'.split('');
-let calibration = JSON.parse(localStorage.getItem('omrV12_calibration')||'null');
+let calibration = JSON.parse(localStorage.getItem('omrV13_calibration')||'null');
 let lastWarpedData = null;
 let lastMarkers = null;
 let lastCircles = [];
@@ -117,13 +117,13 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&
 
 function normalizeText(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().trim()}
 function ensureDefaultStudents(){
-  const flag=localStorage.getItem('omrV12_defaults_loaded');
+  const flag=localStorage.getItem('omrV13_defaults_loaded');
   if(!bank || !bank.length || flag!=='1'){
     const merged=[...(bank||[])];
     DEFAULT_STUDENTS.forEach(s=>{
       if(!merged.some(x=>normalizeText(x.nome)===normalizeText(s.nome)&&normalizeText(x.turma)===normalizeText(s.turma)&&normalizeText(x.curso)===normalizeText(s.curso))) merged.push(s);
     });
-    bank=merged; localStorage.setItem('omrV12_bank',JSON.stringify(bank)); localStorage.setItem('omrV12_defaults_loaded','1');
+    bank=merged; localStorage.setItem('omrV13_bank',JSON.stringify(bank)); localStorage.setItem('omrV13_defaults_loaded','1');
   }
 }
 ensureDefaultStudents();
@@ -188,11 +188,11 @@ $('addStudent').onclick=()=>{
   const rec={nome, curso:$('courseSelect')?.value||'', turma:$('classSelect')?.value||$('studentClass').value.trim(), id:$('studentId').value.trim()||('MANUAL-'+Date.now()), numero:''};
   const i=bank.findIndex(x=>normalizeText(x.nome)===normalizeText(nome)&&normalizeText(x.turma)===normalizeText(rec.turma));
   if(i>=0)bank[i]=rec; else bank.push(rec);
-  localStorage.setItem('omrV12_bank',JSON.stringify(bank)); updateBankUI();
+  localStorage.setItem('omrV13_bank',JSON.stringify(bank)); updateBankUI();
 };
 $('resetDefaultStudents')?.addEventListener('click',()=>{
   if(confirm('Restaurar banco inicial da ETE? Isso mantém alunos manuais e repõe os alunos enviados.')){
-    localStorage.removeItem('omrV12_defaults_loaded'); ensureDefaultStudents(); updateBankUI();
+    localStorage.removeItem('omrV13_defaults_loaded'); ensureDefaultStudents(); updateBankUI();
   }
 });
 $('studentsFile').onchange=async e=>{
@@ -209,7 +209,7 @@ $('studentsFile').onchange=async e=>{
       if(j>=0)bank[j]=rec; else bank.push(rec);
     }
   });
-  localStorage.setItem('omrV12_bank',JSON.stringify(bank)); updateBankUI(); alert('Banco de alunos atualizado.');
+  localStorage.setItem('omrV13_bank',JSON.stringify(bank)); updateBankUI(); alert('Banco de alunos atualizado.');
 };
 $('exportStudents').onclick=()=>{
   const csv=['Curso;Turma;Numero;Nome;ID',...bank.map(s=>[s.curso||'',s.turma||'',s.numero||'',s.nome||'',s.id||''].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(';'))].join('\n');
@@ -264,7 +264,7 @@ function v12StartAutoScan(){
     const markers = v12FindMarkers(frame);
     if(markers){
       v12StableCount++;
-      v12SetMarkerStatus('Marcadores: encontrados ('+v12StableCount+'/2)', 'ok');
+      v12SetMarkerStatus('Marcadores: 4/4 válidos ('+v12StableCount+'/2)', 'ok');
     }else{
       v12StableCount = 0;
       v12SetMarkerStatus('Marcadores: não encontrados', 'bad');
@@ -350,264 +350,67 @@ async function processBatch(){
  alert('Lote processado. Salvos: '+ok+' • Falhas: '+fail+'. A ordem usada foi a lista filtrada de alunos da turma selecionada.');
 }
 function imgToCanvas(img,maxSide=1900){const s=Math.min(1,maxSide/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c}
+async 
 async function processImage(img,show=true){
  const c=imgToCanvas(img);
  let markers=cvReady?findMarkersOpenCV(c):findMarkersFallback(c);
- if(!markers){setBadge('Não encontrei os 4 quadrados. Refaça a foto.','bad');setConfidence(0);return []}
+
+ if(!markers){
+   setBadge('Leitura bloqueada: enquadre os 4 quadrados pretos do gabarito.','bad');
+   const hb=document.getElementById('hardGateBadge'); if(hb){hb.textContent='BLOQUEADO: 4 marcadores não encontrados';hb.className='badge bad'}
+   v12SetMarkerStatus && v12SetMarkerStatus('Marcadores: menos de 4','bad');
+   setConfidence(0);
+   return [];
+ }
+ const validation = validateMarkerQuad(markers, c);
+ if(!validation.ok){
+   setBadge('Leitura bloqueada: '+validation.reason+'. Reenquadre o cartão.','bad');
+   const hb=document.getElementById('hardGateBadge'); if(hb){hb.textContent='BLOQUEADO: '+validation.reason;hb.className='badge bad'}
+   v12SetMarkerStatus && v12SetMarkerStatus('Marcadores: inválidos','bad');
+   setConfidence(0);
+   return [];
+ }
+ const hb=document.getElementById('hardGateBadge'); if(hb){hb.textContent='4 marcadores válidos: leitura liberada';hb.className='badge ok'}
+ v12SetMarkerStatus && v12SetMarkerStatus('Marcadores: 4/4 válidos','ok');
+
  if(show)drawMarkers(c,markers);
  const imgData=warp(c,markers); lastWarpedData=imgData; lastMarkers=markers;
- const circles=detectCirclesAuto(imgData); lastCircles=circles;
- const modelOk=validateModel(circles);
- $('modelStatus').textContent=modelOk.ok?`Modelo validado: ${modelOk.count} círculos`:`Modelo fraco: ${modelOk.count} círculos`;
- $('modelStatus').className='badge '+(modelOk.ok?'ok':'warn');
- const layout=buildLayoutFromCircles(circles);
+
+ // V13: depois da homografia, usa grade fixa matemática como base.
+ const layout=buildFixedV13Layout();
  const results=readWithLayout(imgData,layout);
- const conf=calcConfidence(results,markers,circles,modelOk);
- results._confidence=conf; results._markers=markers; results._circles=circles.length; results._modelOk=modelOk.ok;
+ lastCircles=[];
+ const conf=calcConfidenceV13(results, validation);
+ results._confidence=conf; results._markers=markers; results._modelOk=true;
  setConfidence(conf);
- setBadge(conf>82?'Leitura concluída':conf>60?'Leitura com alertas':'Leitura pouco confiável',conf>82?'ok':conf>60?'warn':'bad');
- return results
+ setBadge(conf>82?'Leitura concluída':'Leitura com alertas',conf>82?'ok':'warn');
+ return results;
 }
-function findMarkersOpenCV(canvas){try{let src=cv.imread(canvas),gray=new cv.Mat(),thr=new cv.Mat(),contours=new cv.MatVector(),hier=new cv.Mat();cv.cvtColor(src,gray,cv.COLOR_RGBA2GRAY);cv.threshold(gray,thr,0,255,cv.THRESH_BINARY_INV+cv.THRESH_OTSU);cv.findContours(thr,contours,hier,cv.RETR_EXTERNAL,cv.CHAIN_APPROX_SIMPLE);let cand=[];for(let i=0;i<contours.size();i++){let cnt=contours.get(i),rect=cv.boundingRect(cnt),area=cv.contourArea(cnt),ratio=rect.width/rect.height,fill=area/(rect.width*rect.height); if(area>canvas.width*canvas.height*0.00025&&ratio>.65&&ratio<1.45&&fill>.55){cand.push({x:rect.x+rect.width/2,y:rect.y+rect.height/2,area,w:rect.width,h:rect.height})}cnt.delete()}src.delete();gray.delete();thr.delete();contours.delete();hier.delete();return pickCorners(cand)}catch(e){console.warn(e);return findMarkersFallback(canvas)}}
-function findMarkersFallback(canvas){const ctx=canvas.getContext('2d',{willReadFrequently:true}),id=ctx.getImageData(0,0,canvas.width,canvas.height),w=id.width,h=id.height,vis=new Uint8Array(w*h),cand=[];const g=(x,y)=>{const i=(y*w+x)*4,d=id.data;return .299*d[i]+.587*d[i+1]+.114*d[i+2]};for(let y=0;y<h;y+=2)for(let x=0;x<w;x+=2){let idx=y*w+x;if(vis[idx]||g(x,y)>75)continue;let st=[[x,y]],n=0,sx=0,sy=0,minx=x,maxx=x,miny=y,maxy=y;vis[idx]=1;while(st.length){let [cx,cy]=st.pop();n++;sx+=cx;sy+=cy;minx=Math.min(minx,cx);maxx=Math.max(maxx,cx);miny=Math.min(miny,cy);maxy=Math.max(maxy,cy);for(const [nx,ny] of [[cx+2,cy],[cx-2,cy],[cx,cy+2],[cx,cy-2]]){if(nx<0||ny<0||nx>=w||ny>=h)continue;let ni=ny*w+nx;if(vis[ni])continue;vis[ni]=1;if(g(nx,ny)<75)st.push([nx,ny])}}let bw=maxx-minx+1,bh=maxy-miny+1,area=n*4,ratio=bw/bh,fill=area/(bw*bh);if(area>w*h*.00025&&ratio>.65&&ratio<1.45&&fill>.45)cand.push({x:sx/n,y:sy/n,area,w:bw,h:bh})} return pickCorners(cand)}
-function pickCorners(cand){if(cand.length<4)return null;cand.sort((a,b)=>b.area-a.area);cand=cand.slice(0,40);const tl=cand.reduce((p,c)=>c.x+c.y<p.x+p.y?c:p,cand[0]),tr=cand.reduce((p,c)=>c.x-c.y>p.x-p.y?c:p,cand[0]),bl=cand.reduce((p,c)=>c.x-c.y<p.x-p.y?c:p,cand[0]),br=cand.reduce((p,c)=>c.x+c.y>p.x+p.y?c:p,cand[0]);const pts=[tl,tr,br,bl];if(new Set(pts.map(p=>Math.round(p.x)+','+Math.round(p.y))).size<4)return null;return{tl,tr,br,bl,all:cand}}
-function drawMarkers(canvas,m){drawPreview(currentImage);const sx=preview.width/canvas.width,sy=preview.height/canvas.height;pctx.strokeStyle='#16a34a';pctx.lineWidth=4;[['TL',m.tl],['TR',m.tr],['BR',m.br],['BL',m.bl]].forEach(([lab,p])=>{pctx.strokeRect((p.x-18)*sx,(p.y-18)*sy,36*sx,36*sy);pctx.fillStyle='#16a34a';pctx.fillText(lab,p.x*sx+8,p.y*sy)})}
-function homography(src,dst){const A=[],b=[];for(let i=0;i<4;i++){const x=src[i].x,y=src[i].y,u=dst[i].x,v=dst[i].y;A.push([x,y,1,0,0,0,-u*x,-u*y]);b.push(u);A.push([0,0,0,x,y,1,-v*x,-v*y]);b.push(v)}for(let i=0;i<8;i++){let mx=i;for(let r=i+1;r<8;r++)if(Math.abs(A[r][i])>Math.abs(A[mx][i]))mx=r;[A[i],A[mx]]=[A[mx],A[i]];[b[i],b[mx]]=[b[mx],b[i]];let p=A[i][i]||1e-12;for(let j=i;j<8;j++)A[i][j]/=p;b[i]/=p;for(let r=0;r<8;r++)if(r!==i){let f=A[r][i];for(let j=i;j<8;j++)A[r][j]-=f*A[i][j];b[r]-=f*b[i]}}return[b[0],b[1],b[2],b[3],b[4],b[5],b[6],b[7],1]}
-function applyH(H,x,y){const d=H[6]*x+H[7]*y+H[8];return{x:(H[0]*x+H[1]*y+H[2])/d,y:(H[3]*x+H[4]*y+H[5])/d}}
-function warp(canvas,m){warped.width=W;warped.height=H;const sctx=canvas.getContext('2d',{willReadFrequently:true}),src=sctx.getImageData(0,0,canvas.width,canvas.height),out=wctx.createImageData(W,H),Hinv=homography([{x:0,y:0},{x:W-1,y:0},{x:W-1,y:H-1},{x:0,y:H-1}],[m.tl,m.tr,m.br,m.bl]);for(let y=0;y<H;y++)for(let x=0;x<W;x++){let p=applyH(Hinv,x,y),sx=Math.max(0,Math.min(canvas.width-1,Math.round(p.x))),sy=Math.max(0,Math.min(canvas.height-1,Math.round(p.y))),si=(sy*canvas.width+sx)*4,oi=(y*W+x)*4;out.data[oi]=src.data[si];out.data[oi+1]=src.data[si+1];out.data[oi+2]=src.data[si+2];out.data[oi+3]=255}wctx.putImageData(out,0,0);return out}
-function grayAt(id,x,y){const i=(y*id.width+x)*4,d=id.data;return .299*d[i]+.587*d[i+1]+.114*d[i+2]}
-function detectCirclesAuto(id){
- let pts=[];
- if(cvReady){
-  try{
-   let src=cv.imread(warped),gray=new cv.Mat(),thr=new cv.Mat(),contours=new cv.MatVector(),hier=new cv.Mat();
-   cv.cvtColor(src,gray,cv.COLOR_RGBA2GRAY);
-   cv.adaptiveThreshold(gray,thr,255,cv.ADAPTIVE_THRESH_GAUSSIAN_C,cv.THRESH_BINARY_INV,31,8);
-   cv.findContours(thr,contours,hier,cv.RETR_EXTERNAL,cv.CHAIN_APPROX_SIMPLE);
-   for(let i=0;i<contours.size();i++){
-    let cnt=contours.get(i),r=cv.boundingRect(cnt),area=cv.contourArea(cnt),ratio=r.width/r.height;
-    const circularity = area/(Math.PI*Math.pow((r.width+r.height)/4,2));
-    if(area>55&&area<1400&&ratio>.65&&ratio<1.45&&r.width>8&&r.width<48&&r.height>8&&r.height<48&&circularity>.35&&circularity<1.45){
-      pts.push({x:r.x+r.width/2,y:r.y+r.height/2,r:(r.width+r.height)/4,method:'contour'});
-    }
-    cnt.delete()
-   }
-   // HoughCircles como reforço quando os contornos forem insuficientes.
-   if(pts.length<220 && cv.HoughCircles){
-    let blur=new cv.Mat(),circles=new cv.Mat();
-    cv.medianBlur(gray,blur,5);
-    cv.HoughCircles(blur,circles,cv.HOUGH_GRADIENT,1,14,80,18,6,24);
-    for(let i=0;i<circles.cols;i++){
-      let x=circles.data32F[i*3], y=circles.data32F[i*3+1], r=circles.data32F[i*3+2];
-      if(x>0&&y>0&&x<W&&y<H)pts.push({x,y,r,method:'hough'});
-    }
-    blur.delete(); circles.delete();
-   }
-   src.delete();gray.delete();thr.delete();contours.delete();hier.delete()
-  }catch(e){console.warn(e)}
- }
- // remove duplicados próximos
- const clean=[];
- pts.sort((a,b)=>a.y-b.y||a.x-b.x);
- for(const p of pts){
-   if(!clean.some(q=>Math.hypot(q.x-p.x,q.y-p.y)<7))clean.push(p);
- }
- return clean
+function calcConfidenceV13(rows, validation){
+ if(!rows || !rows.length) return 0;
+ let ok=rows.filter(r=>r.status==='OK').length/Q;
+ let avg=rows.reduce((s,r)=>s+(r.confidence||0),0)/rows.length;
+ return (ok*.55 + avg*.45)*100;
 }
-function cluster1D(values,gap){
- values=[...values].sort((a,b)=>a-b); if(!values.length)return [];
- let groups=[[values[0]]];
- for(let i=1;i<values.length;i++){let g=groups[groups.length-1]; if(values[i]-g[g.length-1]>gap)groups.push([]); groups[groups.length-1].push(values[i])}
- return groups.map(g=>({min:Math.min(...g),max:Math.max(...g),mid:g.reduce((a,b)=>a+b,0)/g.length,n:g.length})).filter(g=>g.n>2)
-}
-function buildLayoutFromCircles(circles){
- // Prioridade: calibração salva > círculos detectados > template fixo.
- if(calibration && calibration.layout && calibration.layout.length===52)return calibration.layout;
+function buildFixedV13Layout(){
  const fixedCols=[.083,.325,.561,.760], xStep=.0335, y0=.164, yStep=.0611;
  let layout=[], starts=[1,14,27,40];
- if(circles.length>180){
-   const xGroups=cluster1D(circles.map(c=>c.x),55).filter(g=>g.n>25).slice(0,4);
-   const yGroups=cluster1D(circles.map(c=>c.y),28).filter(g=>g.n>8).slice(0,13);
-   if(xGroups.length===4 && yGroups.length===13){
-     xGroups.sort((a,b)=>a.mid-b.mid); yGroups.sort((a,b)=>a.mid-b.mid);
-     for(let c=0;c<4;c++){
-       const local=circles.filter(p=>p.x>=xGroups[c].min-8 && p.x<=xGroups[c].max+8);
-       const altGroups=cluster1D(local.map(p=>p.x),22).slice(0,5).sort((a,b)=>a.mid-b.mid);
-       const xs = altGroups.length===5 ? altGroups.map(g=>g.mid) : Array.from({length:5},(_,i)=>xGroups[c].min+i*(xGroups[c].max-xGroups[c].min)/4);
-       for(let r=0;r<13;r++){
-         let q=starts[c]+r, opts={};
-         ALTS.forEach((a,i)=>opts[a]={x:xs[i],y:yGroups[r].mid});
-         layout.push({q,area:q<=26?'Português':'Matemática',opts})
-       }
-     }
-     return layout.sort((a,b)=>a.q-b.q)
+ for(let c=0;c<4;c++){
+   let firstX=fixedCols[c]*W, step=xStep*W;
+   for(let r=0;r<13;r++){
+     let q=starts[c]+r,y=(y0+r*yStep)*H,opts={};
+     ALTS.forEach((a,i)=>opts[a]={x:firstX+i*step,y});
+     layout.push({q,area:q<=26?'Português':'Matemática',opts});
    }
  }
- for(let c=0;c<4;c++){let firstX=fixedCols[c]*W, step=xStep*W; for(let r=0;r<13;r++){let q=starts[c]+r,y=(y0+r*yStep)*H,opts={};ALTS.forEach((a,i)=>opts[a]={x:firstX+i*step,y}); layout.push({q,area:q<=26?'Português':'Matemática',opts})}}
- return layout.sort((a,b)=>a.q-b.q)
+ return layout.sort((a,b)=>a.q-b.q);
 }
-function validateModel(circles){
- const count=circles.length;
- const xg=cluster1D(circles.map(c=>c.x),55).filter(g=>g.n>25);
- const yg=cluster1D(circles.map(c=>c.y),28).filter(g=>g.n>8);
- return {ok:count>=200 && xg.length>=4 && yg.length>=13, count, xGroups:xg.length, yGroups:yg.length}
-}
-function calibrateFromCurrent(){
- if(!lastWarpedData){alert('Leia ou carregue uma imagem do cartão em branco primeiro.');return}
- const circles=lastCircles.length?lastCircles:detectCirclesAuto(lastWarpedData);
- const v=validateModel(circles);
- if(!v.ok && !confirm(`Foram encontrados apenas ${v.count} círculos. Salvar calibração mesmo assim?`))return;
- const layoutNoCal=(()=>{const old=calibration; calibration=null; const l=buildLayoutFromCircles(circles); calibration=old; return l})();
- calibration={createdAt:new Date().toISOString(),layout:layoutNoCal, circleCount:circles.length, validation:v};
- localStorage.setItem('omrV12_calibration',JSON.stringify(calibration));
- updateCalibrationInfo();
- alert('Calibração salva.')
-}
-function updateCalibrationInfo(){
- if(calibration){$('calibrationInfo').textContent=`Calibração salva: ${calibration.layout?.length||0} questões • ${calibration.circleCount||0} círculos • ${new Date(calibration.createdAt).toLocaleString('pt-BR')}`;$('calibrationInfo').className='hint'}
- else {$('calibrationInfo').textContent='Nenhuma calibração salva.'}
-}
-function darkness(id,cx,cy,r){let sum=0,n=0,vd=0;for(let y=Math.max(0,Math.floor(cy-r));y<=Math.min(id.height-1,Math.ceil(cy+r));y++)for(let x=Math.max(0,Math.floor(cx-r));x<=Math.min(id.width-1,Math.ceil(cx+r));x++){let dx=x-cx,dy=y-cy;if(dx*dx+dy*dy<=r*r){let g=grayAt(id,x,y);sum+=(255-g)/255;if(g<110)vd++;n++}}return{score:sum/(n||1),dark:vd/(n||1)}}
-function readWithLayout(id,layout){debug.width=W;debug.height=H;dctx.putImageData(id,0,0);dctx.strokeStyle='#2563eb';dctx.lineWidth=2;let rows=[];for(const item of layout){let arr=[];for(const a of ALTS){let c=item.opts[a],s=darkness(id,c.x,c.y,14);arr.push({alt:a,score:s.score,dark:s.dark});dctx.strokeRect(c.x-14,c.y-14,28,28)}arr.sort((a,b)=>b.score-a.score);let best=arr[0],second=arr[1],filled=arr.filter(x=>x.score>.33||x.dark>.20);let resposta='',status='OK',note='';if(best.score<.22&&best.dark<.10){status='BRANCO';note='sem marcação'}else if(filled.length>=2 && second.score/best.score>.68){status='DUPLA';note=filled.map(x=>x.alt).join('/')}else if(best.score<.30){status='DUVIDOSA';resposta=best.alt;note='fraca'}else resposta=best.alt;rows.push({questao:item.q,area:item.area,resposta,status,note,confidence:Math.max(0,Math.min(1,(best.score-second.score)/Math.max(.01,best.score))),scores:Object.fromEntries(arr.map(x=>[x.alt,+x.score.toFixed(3)]))})}return rows}
-function calcConfidence(rows,m,circles,modelOk){if(!rows.length)return 0;let ok=rows.filter(r=>r.status==='OK').length/Q,avg=rows.reduce((s,r)=>s+r.confidence,0)/rows.length,circleBonus=Math.min(1,circles.length/260),modelBonus=modelOk?.ok?1:.45;return (ok*.40+avg*.35+circleBonus*.15+modelBonus*.10)*100}
-function renderResults(rows){const key=parseLetters($('answerKey').value);let valid=key.length>=52,lp=0,mat=0,total=0,alerts=0;let html='<tr><th>Q</th><th>Área</th><th>Resposta</th><th>Status</th><th>Gabarito</th><th>Situação</th><th>Conf.</th></tr>';for(const r of rows){const g=valid?key[r.questao-1]:'';let sit='';if(g){if(r.status==='OK'&&r.resposta===g){sit='✅';total++;r.questao<=26?lp++:mat++}else sit='❌'}if(r.status!=='OK')alerts++;let cls=r.status==='OK'?'res-ok':(r.status==='BRANCO'?'res-bad':'res-warn');html+=`<tr><td>${String(r.questao).padStart(2,'0')}</td><td>${r.area}</td><td>${r.resposta||'-'}</td><td class="${cls}">${r.status}${r.note?': '+r.note:''}</td><td>${g||'-'}</td><td>${sit}</td><td>${Math.round((r.confidence||0)*100)}%</td></tr>`}$('resultTable').innerHTML=html;$('summary').textContent=valid?`LP ${lp}/26 • MAT ${mat}/26 • Total ${total}/52 • Alertas ${alerts}`:`Lidas ${rows.filter(r=>r.resposta).length}/52 • Alertas ${alerts}`;renderDescriptorReport(rows);}
-function renderDescriptorReport(rows){const key=parseLetters($('answerKey').value),desc=parseTokens($('descriptors').value);if(key.length<52||desc.length<52){$('descReport').innerHTML='<table><tr><td>Informe gabarito e descritores para gerar relatório.</td></tr></table>';return}let map={};rows.forEach(r=>{let d=desc[r.questao-1]||'Sem descritor'; if(!map[d])map[d]={total:0,acertos:0,lp:0,mat:0};map[d].total++; if(r.status==='OK'&&r.resposta===key[r.questao-1])map[d].acertos++; r.questao<=26?map[d].lp++:map[d].mat++});let html='<table><tr><th>Descritor</th><th>Questões</th><th>Acertos</th><th>%</th></tr>';Object.entries(map).sort().forEach(([d,v])=>html+=`<tr><td>${esc(d)}</td><td>${v.total}</td><td>${v.acertos}</td><td>${Math.round(100*v.acertos/v.total)}%</td></tr>`);$('descReport').innerHTML=html+'</table>'}
-$('saveStudent').onclick=()=>saveReading(true); 
-function currentSelectedStudent(){
-  const id=$('studentId').value.trim(), nome=$('studentName').value.trim();
-  return bank.find(s=>(id && s.id===id) || (nome && normalizeText(s.nome)===normalizeText(nome))) || null;
-}
-function saveReading(show=true){
- if(!lastResults.length)return;
- const key=parseLetters($('answerKey').value);
- let lp=0,mat=0,total=0;
- if(key.length>=52)lastResults.forEach(r=>{if(r.status==='OK'&&r.resposta===key[r.questao-1]){total++;r.questao<=26?lp++:mat++}});
- const selected=currentSelectedStudent();
- const curso=(selected?.curso)||$('courseSelect')?.value||'';
- const turma=(selected?.turma)||$('classSelect')?.value||$('studentClass').value.trim();
- const rec={
-  nome:$('studentName').value.trim()||selected?.nome||'Aluno sem nome',
-  curso, turma,
-  numero:selected?.numero||'',
-  id:$('studentId').value.trim()||selected?.id||'',
-  data:new Date().toLocaleString('pt-BR'),
-  lp,mat,total,
-  alertas:lastResults.filter(r=>r.status!=='OK').length,
-  conf:Math.round(lastResults._confidence||0),
-  respostas:lastResults.map(r=>r.resposta||r.status),
-  status:lastResults.map(r=>r.status)
- };
- saved.push(rec);
- localStorage.setItem('omrV12_saved',JSON.stringify(saved));
- renderSaved(); renderDashboard(); renderIndividualReport(rec.nome);
- $('exportXlsx').disabled=false;
-function dashboardRows(){
- const rows=[['Curso','Turma','Leituras','Média LP','Média MAT','Média Total','Alertas','Confiança média']];
- const groups={};
- saved.forEach(s=>{const k=(s.curso||'Sem curso')+'|'+(s.turma||'Sem turma');if(!groups[k])groups[k]={curso:s.curso||'',turma:s.turma||'',n:0,lp:0,mat:0,total:0,alertas:0,conf:0};const g=groups[k];g.n++;g.lp+=+s.lp||0;g.mat+=+s.mat||0;g.total+=+s.total||0;g.alertas+=+s.alertas||0;g.conf+=+s.conf||0;});
- Object.values(groups).forEach(g=>rows.push([g.curso,g.turma,g.n,+(g.lp/g.n).toFixed(1),+(g.mat/g.n).toFixed(1),+(g.total/g.n).toFixed(1),g.alertas,Math.round(g.conf/g.n)+'%']));
- return rows;
-}
-$('exportCsv').disabled=false;
- if(show)alert('Leitura salva.')
-}
-function renderSaved(){
- if(!saved.length){$('studentsTable').innerHTML='<tr><td>Nenhuma leitura salva.</td></tr>';return}
- let html='<tr><th>Curso</th><th>Turma</th><th>Nº</th><th>Aluno</th><th>ID</th><th>Data</th><th>LP</th><th>MAT</th><th>Total</th><th>Alertas</th><th>Conf.</th></tr>';
- saved.forEach(s=>html+=`<tr><td>${esc(s.curso||'')}</td><td>${esc(s.turma||'')}</td><td>${esc(s.numero||'')}</td><td>${esc(s.nome)}</td><td>${esc(s.id||'')}</td><td>${s.data}</td><td>${s.lp}</td><td>${s.mat}</td><td>${s.total}</td><td>${s.alertas}</td><td>${s.conf}%</td></tr>`);
- $('studentsTable').innerHTML=html;$('exportXlsx').disabled=false;$('exportCsv').disabled=false
-}
-renderSaved();
-function renderDashboard(){
- const box=$('classDashboard'); if(!box)return;
- if(!saved.length){box.innerHTML='<table><tr><td>Nenhum dado salvo.</td></tr></table>'; $('dashboardSummary').textContent='Aguardando leituras'; return}
- const groups={};
- saved.forEach(s=>{
-  const k=(s.curso||'Sem curso')+'|'+(s.turma||'Sem turma');
-  if(!groups[k])groups[k]={curso:s.curso||'Sem curso',turma:s.turma||'Sem turma',n:0,lp:0,mat:0,total:0,alertas:0,conf:0};
-  const g=groups[k]; g.n++; g.lp+=Number(s.lp||0); g.mat+=Number(s.mat||0); g.total+=Number(s.total||0); g.alertas+=Number(s.alertas||0); g.conf+=Number(s.conf||0);
- });
- let html='<table><tr><th>Curso</th><th>Turma</th><th>Leituras</th><th>Média LP</th><th>Média MAT</th><th>Média Total</th><th>Alertas</th><th>Conf. média</th></tr>';
- Object.values(groups).sort((a,b)=>a.curso.localeCompare(b.curso,'pt-BR')||a.turma.localeCompare(b.turma,'pt-BR',{numeric:true})).forEach(g=>{
-  html+=`<tr><td>${esc(g.curso)}</td><td>${esc(g.turma)}</td><td>${g.n}</td><td>${(g.lp/g.n).toFixed(1)}</td><td>${(g.mat/g.n).toFixed(1)}</td><td>${(g.total/g.n).toFixed(1)}</td><td>${g.alertas}</td><td>${Math.round(g.conf/g.n)}%</td></tr>`;
- });
- html+='</table>'; box.innerHTML=html; $('dashboardSummary').textContent=`${saved.length} leitura(s) salva(s)`;
-}
-function renderIndividualReport(nome){
- const box=$('individualReport'); if(!box)return;
- const list=saved.filter(s=>normalizeText(s.nome)===normalizeText(nome||$('studentName').value));
- if(!list.length){box.innerHTML='<table><tr><td>Nenhuma leitura salva para este aluno.</td></tr></table>';return}
- let html='<table><tr><th>Curso</th><th>Turma</th><th>Data</th><th>LP</th><th>MAT</th><th>Total</th><th>Alertas</th><th>Conf.</th></tr>';
- list.forEach(s=>html+=`<tr><td>${esc(s.curso||'')}</td><td>${esc(s.turma||'')}</td><td>${s.data}</td><td>${s.lp}</td><td>${s.mat}</td><td>${s.total}</td><td>${s.alertas}</td><td>${s.conf}%</td></tr>`);
- html+='</table>'; box.innerHTML=html;
-}
-$('refreshDashboard')?.addEventListener('click',renderDashboard);
-$('clearReadings').onclick=()=>{if(confirm('Limpar leituras salvas?')){saved=[];localStorage.removeItem('omrV12_saved');renderSaved();$('exportXlsx').disabled=true;$('exportCsv').disabled=true}};
-function exportRows(){
- const head=['Curso','Turma','Numero','Nome','ID','Data','LP','MAT','Total','Alertas','Confiança',...Array.from({length:52},(_,i)=>'Q'+(i+1)),...Array.from({length:52},(_,i)=>'Status Q'+(i+1))];
- return [head,...saved.map(s=>[s.curso||'',s.turma||'',s.numero||'',s.nome,s.id,s.data,s.lp,s.mat,s.total,s.alertas,s.conf,...s.respostas,...(s.status||[])])]
-}
-function descriptorRows(){
- const key=parseLetters($('answerKey').value), desc=parseTokens($('descriptors').value);
- const rows=[['Descritor','Área','Questões','Acertos','%']];
- if(key.length<52||desc.length<52||!saved.length)return rows;
- const map={};
- saved.forEach(s=>{
-   for(let i=0;i<52;i++){
-     const d=desc[i]||'Sem descritor', area=i<26?'Português':'Matemática';
-     const k=d+'|'+area; if(!map[k])map[k]={d,area,total:0,acertos:0};
-     map[k].total++;
-     if((s.status?.[i]||'')==='OK' && s.respostas?.[i]===key[i])map[k].acertos++;
-   }
- });
- Object.values(map).sort((a,b)=>a.area.localeCompare(b.area)||a.d.localeCompare(b.d)).forEach(v=>rows.push([v.d,v.area,v.total,v.acertos,Math.round(100*v.acertos/v.total)+'%']));
- return rows;
-}
-$('exportCsv').onclick=()=>{const csv=exportRows().map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\n');downloadBlob(csv,'leituras_cartoes_v12.csv','text/csv;charset=utf-8')};
-$('exportXlsx').onclick=()=>{
- if(!window.XLSX)return alert('Biblioteca XLSX não carregou.');
- const wb=XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(exportRows()),'Leituras');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(descriptorRows()),'Descritores');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Curso','Turma','Número','Nome','ID'],...bank.map(s=>[s.curso||'',s.turma||'',s.numero||'',s.nome,s.id])]),'Banco_Alunos');
- XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(dashboardRows()),'Dashboard_Turmas');
- XLSX.writeFile(wb,'leituras_cartoes_v12.xlsx')
-};
-function downloadBlob(content,name,type){const blob=new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href)}
-$('calibrateBtn').onclick=calibrateFromCurrent;
-$('clearCalibration').onclick=()=>{if(confirm('Apagar calibração salva?')){calibration=null;localStorage.removeItem('omrV12_calibration');updateCalibrationInfo()}};
-$('validateModelBtn').onclick=()=>{if(!lastCircles.length)return alert('Leia uma imagem primeiro.');const v=validateModel(lastCircles);alert(`Círculos: ${v.count}\nGrupos X: ${v.xGroups}\nGrupos Y: ${v.yGroups}\nModelo: ${v.ok?'validado':'fraco'}`)};
-updateCalibrationInfo();
-$('runTests').onclick=()=>{
- let out=[];
- const fake=(mode)=>{const a=Array.from({length:52},(_,i)=>({questao:i+1,area:i<26?'Português':'Matemática',resposta:'A',status:'OK',note:'',confidence:.95})); if(mode==='double'){a[0].resposta='';a[0].status='DUPLA';a[0].note='A/B';a[0].confidence=.2} if(mode==='blank'){a[14].resposta='';a[14].status='BRANCO';a[14].note='sem marcação';a[14].confidence=.1} return a};
- let t1=fake('full'),t2=fake('double'),t3=fake('blank');
- out.push(t1.length===52&&t1.every(x=>x.status==='OK')?'✅ 52 questões OK':'❌ Quantidade de questões falhou');
- out.push(t2[0].status==='DUPLA'?'✅ Dupla marcação OK':'❌ Dupla falhou');
- out.push(t3[14].status==='BRANCO'?'✅ Branco OK':'❌ Branco falhou');
- out.push(typeof descriptorRows==='function'?'✅ Relatório por descritor disponível':'❌ Relatório por descritor falhou');
- out.push(window.XLSX?'✅ XLSX carregado':'⚠️ XLSX não carregado');
- out.push(cvReady?'✅ OpenCV carregado':'⚠️ OpenCV ainda não carregou');
- out.push(bank.length>=478?'✅ Banco inicial da ETE carregado ('+bank.length+' alunos)':'⚠️ Banco inicial incompleto: '+bank.length+' alunos');
- $('testOutput').innerHTML=out.join('<br>')
-};
 
-
-function updateScanStatus(msg,ok){
- const e=$('scanStatus'); if(e){e.textContent=msg;e.className='badge '+(ok?'ok':'')}
-}
-setInterval(()=>{
- if(!$('autoCapture')||!$('autoCapture').checked)return;
- if(currentImage && lastMarkers && lastMarkers.length===4){
-   updateScanStatus('4 marcadores detectados',true);
- }else{
-   updateScanStatus('Enquadre os 4 marcadores do gabarito',false);
- }
-},1000);
 
 try{
-  document.title = 'Leitor de Cartão-Resposta V12 LIMPA';
-  const h = document.querySelector('header h1'); if(h) h.textContent = 'Leitor de Cartão-Resposta V12 LIMPA';
+  document.title='Leitor de Cartão-Resposta V13 LIMPA';
+  const h=document.querySelector('header h1'); if(h) h.textContent='Leitor de Cartão-Resposta V13 LIMPA';
+  const badge=document.getElementById('versionBadge'); if(badge) badge.textContent='V13 LIMPA - BUILD 2026-06-16';
 }catch(e){}
 </script>
 </body>
